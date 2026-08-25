@@ -1,0 +1,36 @@
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  image_size: [224, 224]
+  split_ratios: [0.70, 0.15, 0.15]
+  random_seed: 42
+
+augmentation:
+  enabled: true
+  rotation_range: 15
+  width_shift_range: 0.1
+  height_shift_range: 0.1
+  shear_range: 0.1
+  brightness_range: [0.8, 1.2]
+  horizontal_flip: true
+  vertical_flip: true
+  fill_mode: nearest
+
+model:
+  architecture: custom_cnn
+  input_shape: [224, 224, 3]
+
+training:
+  optimizer: adam
+  learning_rate: 0.001
+  batch_size: 32
+  epochs: 50
+  early_stopping_patience: 10
+  reduce_lr_patience: 5
+  reduce_lr_factor: 0.5
+
+output:
+  checkpoint_dir: outputs/checkpoints
+  log_dir: outputs/logs
+  metrics_dir: outputs/metrics
+  export_dir: outputs/exports
