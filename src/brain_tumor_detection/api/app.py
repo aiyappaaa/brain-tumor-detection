@@ -75,4 +75,11 @@ def create_app(
     # Register routes
     app.include_router(router)
 
+    from fastapi.responses import FileResponse
+
+    @app.get("/", include_in_schema=False)
+    async def serve_ui():
+        """Serve the frontend GUI."""
+        return FileResponse("static/index.html")
+
     return app
