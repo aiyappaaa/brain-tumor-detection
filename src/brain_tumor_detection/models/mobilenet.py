@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 def build_mobilenet_v2(
     input_shape: tuple[int, int, int] = (224, 224, 3),
-    freeze_base: bool = True,
+    freeze_base: bool = False,
     dropout_rate: float = 0.5
 ) -> keras.Model:
     """Build a MobileNetV2-based model for brain tumor classification.
@@ -31,12 +31,13 @@ def build_mobilenet_v2(
     inputs = keras.Input(shape=input_shape, name="input_layer")
     
     # Preprocess inputs (MobileNetV2 expects values in [-1, 1])
-    # x = keras.applications.mobilenet_v2.preprocess_input(inputs) # Or standard rescaling
+    # Our data loader outputs [0, 1], so we map it to [-1, 1]
+    x = layers.Rescaling(scale=2.0, offset=-1.0)(inputs)
     
     base_model = MobileNetV2(
         include_top=False,
         weights='imagenet',
-        input_tensor=inputs
+        input_tensor=x
     )
     
     if freeze_base:

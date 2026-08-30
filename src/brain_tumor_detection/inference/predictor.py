@@ -24,7 +24,7 @@ class Predictor:
         self,
         model_path: str | Path,
         image_size: tuple[int, int] = (224, 224),
-        threshold: float = 0.5,
+        threshold: float = 0.90,
     ) -> None:
         """Initialize the predictor by loading a trained model.
 
