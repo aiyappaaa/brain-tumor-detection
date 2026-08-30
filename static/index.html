@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroVision AI — Brain Tumor Detection</title>
+    <title>Brain Tumor Detection System</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --bg-purple: #000000;
+            --bg-color: #000000;
             --gold: #d4af37;
             --gold-dark: #b5952f;
             --gold-light: #f3d56a;
@@ -23,82 +23,17 @@
 
         body {
             font-family: "Times New Roman", Times, serif;
-            background-color: var(--bg-purple);
+            background-color: var(--bg-color);
             color: var(--text-dark);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* Header - Gold Panel */
-        .header {
-            background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
-            color: var(--text-dark);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .brand-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .brand-logo {
-            font-size: 2rem;
-        }
-
-        .brand-text-container {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .brand-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .brand-subtitle {
-            font-size: 0.9rem;
-            font-style: italic;
-        }
-
-        .status-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 0.2rem;
-        }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-
-        .status-light {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--green);
-            box-shadow: 0 0 5px var(--green);
-        }
-
-        .status-time {
-            font-size: 0.8rem;
-            color: rgba(0, 0, 0, 0.7);
-        }
-
         /* Main Content area */
         .container {
             max-width: 1200px;
-            margin: 2rem auto;
+            margin: 3rem auto;
             padding: 0 1rem;
             flex: 1;
             display: flex;
@@ -113,7 +48,8 @@
             padding: 3rem 2rem;
             text-align: center;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--gold);
         }
 
         .hero-title {
@@ -148,7 +84,7 @@
             border: 2px solid var(--gold);
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
         }
@@ -329,7 +265,7 @@
         .footer {
             text-align: center;
             padding: 2rem;
-            color: #ccc;
+            color: #666;
             font-size: 0.9rem;
         }
 
@@ -352,24 +288,6 @@
     </style>
 </head>
 <body>
-
-    <!-- Header -->
-    <header class="header">
-        <div class="brand-container">
-            <i class="fa-solid fa-brain brand-logo"></i>
-            <div class="brand-text-container">
-                <span class="brand-title">NEUROVISIONAI</span>
-                <span class="brand-subtitle">Powered by Deep Learning & Grad-CAM</span>
-            </div>
-        </div>
-        <div class="status-container">
-            <div class="status-indicator">
-                <span class="status-light" id="statusLight"></span>
-                <span id="statusText">MODEL ONLINE</span>
-            </div>
-            <span class="status-time" id="statusTime">Last checked: Just now</span>
-        </div>
-    </header>
 
     <div class="container">
         <!-- Hero Panel -->
@@ -438,7 +356,7 @@
 
                     <!-- Empty State -->
                     <div class="results-state" id="resultsEmpty">
-                        <i class="fa-solid fa-file-waveform"></i>
+                        <i class="fa-solid fa-file-medical-alt"></i>
                         <h3>Awaiting Scan</h3>
                         <p>Upload an image to see the analysis here.</p>
                     </div>
@@ -502,8 +420,7 @@
             resultsContainer: $('resultsContainer'), resultClass: $('resultClass'),
             resultConfidence: $('resultConfidence'), resultProb: $('resultProb'),
             resultFilename: $('resultFilename'), heatmapImage: $('heatmapImage'),
-            analysisTime: $('analysisTime'), statusText: $('statusText'),
-            statusLight: $('statusLight'), statusTime: $('statusTime')
+            analysisTime: $('analysisTime')
         };
         let currentFile = null;
 
@@ -570,28 +487,6 @@
             el.resultFilename.textContent = d.filename;
             el.heatmapImage.src = d.heatmap_path + '?t=' + Date.now();
         }
-
-        function checkHealth() {
-            fetch('/health').then(r => r.json()).then(d => {
-                const t = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                el.statusTime.textContent = 'Last checked: ' + t;
-                if (!d.model_loaded) {
-                    el.statusText.textContent = 'MODEL LOADING';
-                    el.statusLight.style.backgroundColor = 'orange';
-                    el.statusLight.style.boxShadow = '0 0 5px orange';
-                } else {
-                    el.statusText.textContent = 'MODEL ONLINE';
-                    el.statusLight.style.backgroundColor = 'var(--green)';
-                    el.statusLight.style.boxShadow = '0 0 5px var(--green)';
-                }
-            }).catch(() => {
-                el.statusText.textContent = 'SYSTEM OFFLINE';
-                el.statusLight.style.backgroundColor = 'var(--red)';
-                el.statusLight.style.boxShadow = '0 0 5px var(--red)';
-                el.statusTime.textContent = 'Unreachable';
-            });
-        }
-        checkHealth(); setInterval(checkHealth, 120000);
     })();
     </script>
 </body>
