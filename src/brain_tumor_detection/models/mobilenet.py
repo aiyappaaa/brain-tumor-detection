@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 def build_mobilenet_v2(
     input_shape: tuple[int, int, int] = (224, 224, 3),
-    freeze_base: bool = False,
+    freeze_base: bool = True,
     dropout_rate: float = 0.5
 ) -> keras.Model:
     """Build a MobileNetV2-based model for brain tumor classification.

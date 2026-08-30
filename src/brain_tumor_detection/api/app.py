@@ -36,7 +36,7 @@ def create_app(
             predictor = Predictor(model_path=model_path, image_size=image_size)
             app.state.predictor = predictor
 
-            gradcam = GradCAM(model=predictor.model)
+            gradcam = GradCAM(model=predictor.model, threshold=predictor.threshold)
             app.state.gradcam = gradcam
 
             logger.info("Model and GradCAM initialized successfully")

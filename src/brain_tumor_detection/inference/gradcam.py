@@ -36,6 +36,7 @@ class GradCAM:
         self,
         model: keras.Model,
         layer_name: str | None = None,
+        threshold: float = 0.5,
     ) -> None:
         """Initialize GradCAM.
 
@@ -43,8 +44,10 @@ class GradCAM:
             model: Trained Keras model.
             layer_name: Name of the convolutional layer to visualize.
                 If None, automatically selects the last Conv2D layer.
+            threshold: Classification threshold for tumor detection.
         """
         self.model = model
+        self.threshold = threshold
 
         if layer_name is None:
             layer_name = self._find_last_conv_layer()
@@ -229,7 +232,7 @@ class GradCAM:
         # Get prediction
         image_batch = np.expand_dims(preprocessed, axis=0).astype(np.float32)
         probability = float(self.model.predict(image_batch, verbose=0)[0][0])
-        label = 1 if probability >= 0.5 else 0
+        label = 1 if probability >= self.threshold else 0
         confidence = probability if label == 1 else 1.0 - probability
 
         prediction = {
