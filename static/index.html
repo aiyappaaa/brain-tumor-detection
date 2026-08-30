@@ -7,79 +7,104 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --indigo-deep: #1a1a2e;
-            --indigo-mid: #252545;
-            --indigo-warm: #2d2b55;
-            --coral: #e07a5f;
-            --coral-soft: #f2cc8f;
-            --forest: #3d6b5e;
-            --forest-light: #81b29a;
-            --bone: #f4f1ea;
-            --bone-warm: #ece8df;
-            --parchment: #faf7f2;
-            --ink: #2c2c3a;
-            --ink-light: #6b6b80;
+            --wood: #1a1425;
+            --wood-grain: #211a30;
+            --copper: #b87333;
+            --copper-light: #d4956b;
+            --copper-dark: #8b5a2b;
+            --copper-shine: #e8b778;
+            --gold: #d4af37;
+            --gold-light: #f0d080;
+            --gold-dim: #a08030;
+            --brass: #cd9b1d;
+            --patina: #4a8b7f;
+            --patina-dark: #2d6b5e;
+            --patina-glow: #6bbaa8;
+            --ivory: #f5f0e1;
+            --parchment: #ece4d0;
+            --parchment-dark: #d8cdb8;
+            --sapphire: #0a1628;
+            --sapphire-rim: #1a3050;
+            --amber-glow: rgba(232, 183, 120, 0.08);
+            --ruby: #9b1b30;
+            --ink: #2a2235;
+            --ink-soft: #6b6078;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background: var(--indigo-deep);
-            color: #d4d0c8;
+            font-family: 'EB Garamond', Georgia, serif;
             min-height: 100vh;
-            position: relative;
             overflow-x: hidden;
+            color: var(--ivory);
+            /* Dark indigo wood surface */
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,0.003) 1px,
+                    transparent 2px,
+                    transparent 6px
+                ),
+                linear-gradient(180deg, #1a1425 0%, #15101e 50%, #1a1425 100%);
+            background-attachment: fixed;
         }
 
-        /* Subtle linen texture overlay */
+        /* Ambient warm glow from filament bulbs */
         body::before {
             content: '';
             position: fixed;
-            inset: 0;
-            opacity: 0.025;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='1' height='1' fill='%23fff'/%3E%3C/svg%3E");
-            background-size: 4px 4px;
+            top: -10%;
+            left: 30%;
+            width: 40%;
+            height: 40%;
+            background: radial-gradient(ellipse, rgba(232, 183, 120, 0.07) 0%, transparent 70%);
             pointer-events: none;
-            z-index: 0;
         }
-
-        /* Warm ambient glow */
         body::after {
             content: '';
             position: fixed;
-            top: -20%;
-            right: -10%;
-            width: 60%;
-            height: 60%;
-            background: radial-gradient(ellipse, rgba(224, 122, 95, 0.06) 0%, transparent 70%);
+            bottom: 0;
+            right: 20%;
+            width: 50%;
+            height: 30%;
+            background: radial-gradient(ellipse, rgba(184, 115, 51, 0.04) 0%, transparent 70%);
             pointer-events: none;
-            z-index: 0;
         }
 
-        .page-wrap { position: relative; z-index: 1; }
+        .page { position: relative; z-index: 1; }
 
-        h1, h2, h3 { font-family: 'DM Serif Display', Georgia, serif; }
-        .handwritten { font-family: 'Caveat', cursive; }
-
-        /* Navbar */
-        .navbar {
+        /* === COPPER BANNER HEADER === */
+        .copper-banner {
             position: sticky;
             top: 0;
             z-index: 50;
-            background: rgba(26, 26, 46, 0.85);
-            backdrop-filter: blur(16px) saturate(1.2);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            padding: 0 1.5rem;
+            /* Brushed copper texture */
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,0.02) 1px,
+                    transparent 1.5px,
+                    transparent 3px
+                ),
+                linear-gradient(180deg, #a06830 0%, var(--copper) 30%, var(--copper-dark) 100%);
+            border-bottom: 2px solid var(--gold-dim);
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.4),
+                inset 0 1px 0 rgba(255,255,255,0.15),
+                inset 0 -1px 0 rgba(0,0,0,0.2);
         }
-        .navbar-inner {
+        .banner-inner {
             max-width: 72rem;
             margin: 0 auto;
-            height: 4rem;
+            padding: 0 1.5rem;
+            height: 3.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -87,96 +112,135 @@
         .brand {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.7rem;
         }
         .brand-icon {
-            width: 2.25rem;
-            height: 2.25rem;
-            border-radius: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            /* Hand-etched feel: layered gradients with noise */
-            background: linear-gradient(135deg, #4a4478, #6b5b95);
-            box-shadow: 0 2px 8px rgba(107, 91, 149, 0.3),
-                         inset 0 1px 0 rgba(255,255,255,0.1);
-            color: var(--coral-soft);
+            width: 2rem; height: 2rem;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            /* Sculpted copper icon */
+            background: radial-gradient(circle at 30% 30%, var(--copper-light), var(--copper-dark));
+            border: 1.5px solid var(--gold-dim);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.2);
+            color: var(--gold-light);
+            font-size: 0.85rem;
         }
         .brand-name {
-            font-family: 'DM Serif Display', serif;
-            font-size: 1.15rem;
-            letter-spacing: -0.01em;
-            color: var(--bone);
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            /* Gold inlay */
+            background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dim) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+            filter: drop-shadow(0 1px 1px rgba(0,0,0,0.3));
         }
-        .brand-name span { color: var(--coral); }
-
-        .status-pill {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 0.15rem;
-        }
-        .status-badge {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            background: rgba(61, 107, 94, 0.15);
-            border: 1px solid rgba(61, 107, 94, 0.25);
-            color: var(--forest-light);
-            padding: 0.3rem 0.7rem;
-            border-radius: 2rem;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-        .status-dot {
-            width: 6px; height: 6px;
-            border-radius: 50%;
-            background: var(--forest-light);
-            animation: softPulse 3s ease-in-out infinite;
-        }
-        @keyframes softPulse {
-            0%, 100% { opacity: 0.6; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-        .status-timestamp {
-            font-size: 0.6rem;
-            color: rgba(255,255,255,0.2);
+        .etched-text {
+            font-family: 'EB Garamond', serif;
+            font-size: 0.65rem;
             font-style: italic;
+            letter-spacing: 0.05em;
+            color: rgba(244, 240, 225, 0.5);
+            margin-left: 1rem;
         }
 
-        /* Hero */
+        /* Brass gauge */
+        .brass-gauge {
+            width: 2.8rem; height: 2.8rem;
+            border-radius: 50%;
+            position: relative;
+            /* Brass ring */
+            background: radial-gradient(circle at 40% 35%, #ddb44a, #a07820, #7a5a18);
+            border: 2px solid #6a4a10;
+            box-shadow:
+                0 2px 6px rgba(0,0,0,0.4),
+                inset 0 1px 2px rgba(255,255,255,0.2),
+                inset 0 -1px 2px rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .gauge-face {
+            width: 2rem; height: 2rem;
+            border-radius: 50%;
+            background: radial-gradient(circle, #0a1210 0%, #081815 100%);
+            border: 1px solid #4a3a10;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 1px;
+        }
+        .gauge-dot {
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: var(--patina-glow);
+            box-shadow: 0 0 4px var(--patina-glow), 0 0 8px rgba(107, 186, 168, 0.3);
+            animation: gaugePulse 3s ease-in-out infinite;
+        }
+        @keyframes gaugePulse {
+            0%, 100% { opacity: 0.7; box-shadow: 0 0 4px var(--patina-glow); }
+            50% { opacity: 1; box-shadow: 0 0 6px var(--patina-glow), 0 0 12px rgba(107,186,168,0.4); }
+        }
+        .gauge-text {
+            font-family: 'Cinzel', serif;
+            font-size: 0.3rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--patina-glow);
+            text-shadow: 0 0 3px rgba(107,186,168,0.3);
+        }
+        .gauge-time {
+            font-size: 0.55rem;
+            color: rgba(255,255,255,0.15);
+            font-style: italic;
+            margin-left: 0.6rem;
+        }
+
+        /* === HERO === */
         .hero {
             text-align: center;
-            padding: 3rem 1rem 2rem;
-            max-width: 42rem;
+            padding: 3rem 1.5rem 2rem;
+            max-width: 44rem;
             margin: 0 auto;
         }
         .hero-powered {
-            font-family: 'Caveat', cursive;
-            font-size: 1.1rem;
-            color: var(--coral);
-            opacity: 0.8;
-            margin-bottom: 0.5rem;
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+            font-size: 1rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--copper-light);
+            opacity: 0.7;
+            margin-bottom: 0.75rem;
         }
         .hero h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            line-height: 1.15;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #8b7fba, var(--coral), #e8a87c);
+            font-family: 'Cinzel Decorative', serif;
+            font-weight: 900;
+            font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+            line-height: 1.2;
+            letter-spacing: 0.04em;
+            margin-bottom: 1.25rem;
+            /* Oxidized patina with gold outline effect */
+            background: linear-gradient(135deg, var(--patina-glow) 0%, var(--patina) 40%, var(--gold) 70%, var(--patina-glow) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
         }
-        .hero-desc {
+        .hero-tagline {
+            /* Archival paper element */
+            display: inline-block;
+            background:
+                linear-gradient(to bottom, var(--ivory), var(--parchment));
+            border: 1px solid var(--parchment-dark);
+            border-radius: 0.3rem;
+            padding: 0.8rem 1.5rem;
+            color: var(--ink);
             font-size: 1rem;
-            line-height: 1.7;
-            color: rgba(212, 208, 200, 0.7);
-            max-width: 32rem;
-            margin: 0 auto;
+            line-height: 1.65;
+            font-style: italic;
+            max-width: 34rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15), inset 0 0 20px rgba(0,0,0,0.02);
         }
 
-        /* Main grid */
+        /* === MAIN GRID === */
         .main-grid {
             max-width: 72rem;
             margin: 0 auto;
@@ -189,410 +253,349 @@
             .main-grid { grid-template-columns: 5fr 7fr; gap: 2rem; }
         }
 
-        /* Cards — warm parchment feel */
-        .card {
-            background: var(--bone);
-            border-radius: 1rem;
+        /* === MODULE CARDS — Beveled copper edges === */
+        .module {
+            position: relative;
+            background: var(--ivory);
+            border-radius: 0.5rem;
             overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.06);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.04);
             color: var(--ink);
-            /* Subtle paper texture */
-            background-image:
-                linear-gradient(to bottom, var(--parchment), var(--bone-warm)),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.015'/%3E%3C/svg%3E");
+            /* Copper frame effect */
+            border: 2px solid var(--copper);
+            box-shadow:
+                0 0 0 1px var(--copper-dark),
+                0 4px 16px rgba(0,0,0,0.25),
+                inset 0 1px 0 rgba(255,255,255,0.5);
         }
-        .card-header {
-            padding: 1rem 1.25rem;
-            border-bottom: 1px solid rgba(0,0,0,0.06);
+        .module::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            /* Brushed copper bevel highlight */
+            background: linear-gradient(90deg, var(--copper-dark), var(--copper-shine), var(--copper-light), var(--copper-shine), var(--copper-dark));
+        }
+
+        .module-header {
+            padding: 0.8rem 1.1rem;
+            /* Copper header strip */
+            background:
+                repeating-linear-gradient(90deg, transparent, rgba(255,255,255,0.015) 1px, transparent 1.5px, transparent 3px),
+                linear-gradient(180deg, var(--copper-light), var(--copper), var(--copper-dark));
+            border-bottom: 1px solid var(--copper-dark);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.15);
         }
-        .card-header h2 {
-            font-size: 1rem;
-            font-weight: 400;
-            color: var(--ink);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .step-num {
-            width: 1.5rem; height: 1.5rem;
-            border-radius: 0.35rem;
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.7rem;
+        .module-header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
             font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ivory);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            display: flex; align-items: center; gap: 0.5rem;
         }
-        .card-body { padding: 1.25rem; }
+        .module-num {
+            width: 1.4rem; height: 1.4rem;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem; font-weight: 700;
+            background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.2), transparent);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--gold-light);
+        }
+        .module-body {
+            padding: 1.25rem;
+            /* Parchment texture */
+            background:
+                linear-gradient(to bottom, var(--ivory), var(--parchment));
+        }
+        .file-info-text {
+            font-size: 0.7rem;
+            color: var(--ivory);
+            opacity: 0.6;
+        }
 
-        /* Dropzone */
+        /* === DROPZONE — Sculpted depression === */
         .dropzone {
-            border: 1.5px dashed rgba(0,0,0,0.15);
-            border-radius: 0.75rem;
+            border: 1.5px dashed var(--parchment-dark);
+            border-radius: 0.5rem;
             padding: 2.5rem 1.5rem;
             text-align: center;
             cursor: pointer;
-            transition: all 0.25s ease;
-            position: relative;
-            background: rgba(255,255,255,0.5);
+            transition: all 0.25s;
+            /* Sunken depression effect */
+            background: rgba(255,255,255,0.3);
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.06), inset 0 -1px 0 rgba(255,255,255,0.8);
         }
         .dropzone:hover, .dropzone.drag-active {
-            border-color: var(--coral);
-            background: rgba(224, 122, 95, 0.04);
+            border-color: var(--copper);
+            background: rgba(184,115,51,0.04);
+            box-shadow: inset 0 2px 8px rgba(184,115,51,0.08), inset 0 -1px 0 rgba(255,255,255,0.8);
         }
-        .dropzone-icon {
+        .dz-icon {
             width: 3.5rem; height: 3.5rem;
             margin: 0 auto 1rem;
-            border-radius: 0.75rem;
+            border-radius: 0.5rem;
             display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, rgba(107, 91, 149, 0.1), rgba(224, 122, 95, 0.1));
-            color: var(--ink-light);
-            font-size: 1.25rem;
+            font-size: 1.3rem;
+            /* Copper ridges */
+            background: linear-gradient(135deg, rgba(184,115,51,0.12), rgba(212,149,107,0.08));
+            border: 1px solid rgba(184,115,51,0.15);
+            color: var(--copper);
             transition: transform 0.2s;
         }
-        .dropzone:hover .dropzone-icon { transform: scale(1.08); }
-        .dropzone-title { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
-        .dropzone-sub { font-size: 0.78rem; color: var(--ink-light); margin-top: 0.25rem; }
+        .dropzone:hover .dz-icon { transform: scale(1.06); }
+        .dz-title { font-family: 'EB Garamond', serif; font-size: 0.95rem; font-weight: 500; color: var(--ink); }
+        .dz-sub { font-family: 'EB Garamond', serif; font-size: 0.82rem; font-style: italic; color: var(--ink-soft); margin-top: 0.2rem; }
 
         /* Preview */
-        .preview-wrap {
-            margin-top: 1rem;
-            position: relative;
-        }
+        .preview-wrap { margin-top: 1rem; position: relative; }
         .preview-img-wrap {
-            border-radius: 0.75rem;
+            border-radius: 0.4rem;
             overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.08);
-            background: #f9f6f1;
+            border: 1px solid var(--parchment-dark);
+            background: #f8f4eb;
         }
-        .preview-img {
-            width: 100%;
-            height: 13rem;
-            object-fit: contain;
-            display: block;
-        }
+        .preview-img { width: 100%; height: 13rem; object-fit: contain; display: block; }
         .preview-close {
             position: absolute; top: 0.5rem; right: 0.5rem;
-            width: 1.75rem; height: 1.75rem;
-            border-radius: 0.4rem;
-            border: 1px solid rgba(0,0,0,0.1);
-            background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(4px);
+            width: 1.6rem; height: 1.6rem;
+            border-radius: 50%;
+            border: 1px solid var(--parchment-dark);
+            background: var(--ivory);
             display: flex; align-items: center; justify-content: center;
-            font-size: 0.7rem;
-            color: var(--ink-light);
-            cursor: pointer;
+            font-size: 0.6rem; color: var(--ink-soft); cursor: pointer;
             transition: all 0.15s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        .preview-close:hover { color: #c0392b; border-color: #c0392b; }
+        .preview-close:hover { color: var(--ruby); border-color: var(--ruby); }
 
         .analyze-btn {
-            width: 100%;
-            margin-top: 0.75rem;
-            padding: 0.8rem 1rem;
-            border: none;
-            border-radius: 0.6rem;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 600;
+            width: 100%; margin-top: 0.75rem;
+            padding: 0.75rem 1rem; border: none; border-radius: 0.4rem;
+            font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 0.06em; text-transform: uppercase;
             cursor: pointer;
             display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-            background: linear-gradient(135deg, var(--indigo-warm), #4a4478);
-            color: var(--bone);
-            box-shadow: 0 2px 8px rgba(74, 68, 120, 0.3);
+            background:
+                repeating-linear-gradient(90deg, transparent, rgba(255,255,255,0.02) 1px, transparent 1.5px, transparent 3px),
+                linear-gradient(180deg, var(--copper-light), var(--copper), var(--copper-dark));
+            color: var(--ivory);
+            border: 1px solid var(--copper-dark);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.12);
             transition: all 0.2s;
         }
-        .analyze-btn:hover { box-shadow: 0 4px 16px rgba(74, 68, 120, 0.4); transform: translateY(-1px); }
-        .analyze-btn:active { transform: translateY(0); }
+        .analyze-btn:hover { box-shadow: 0 3px 10px rgba(184,115,51,0.3), inset 0 1px 0 rgba(255,255,255,0.15); }
+        .analyze-btn:active { transform: translateY(1px); }
         .analyze-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-        /* Sample scans */
-        .samples-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.6rem;
+        /* Samples */
+        .copper-ribbon {
+            padding: 0.5rem 1.1rem;
+            background:
+                repeating-linear-gradient(90deg, transparent, rgba(255,255,255,0.015) 1px, transparent 1.5px, transparent 3px),
+                linear-gradient(180deg, var(--copper-light), var(--copper-dark));
+            border-top: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(0,0,0,0.15);
         }
+        .copper-ribbon h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem; font-weight: 700;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--ivory); text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+        }
+        .samples-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; padding: 1rem 1.1rem; background: linear-gradient(var(--ivory), var(--parchment)); }
         .sample-btn {
-            position: relative;
-            border-radius: 0.6rem;
-            overflow: hidden;
-            border: 1.5px solid rgba(0,0,0,0.06);
-            cursor: pointer;
-            background: none;
-            padding: 0;
-            transition: all 0.2s;
+            position: relative; border-radius: 0.35rem; overflow: hidden;
+            border: 1.5px solid var(--parchment-dark);
+            cursor: pointer; background: none; padding: 0; transition: all 0.2s;
         }
-        .sample-btn:hover { border-color: var(--coral); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .sample-btn img { width: 100%; height: 5rem; object-fit: cover; display: block; opacity: 0.8; transition: opacity 0.2s; }
+        .sample-btn:hover { border-color: var(--copper); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .sample-btn img { width: 100%; height: 5rem; object-fit: cover; display: block; opacity: 0.85; transition: opacity 0.2s; }
         .sample-btn:hover img { opacity: 1; }
         .sample-overlay {
             position: absolute; bottom: 0; left: 0; right: 0;
-            padding: 0.35rem 0.5rem;
+            padding: 0.3rem 0.5rem;
             display: flex; align-items: center; justify-content: space-between;
             background: linear-gradient(transparent, rgba(0,0,0,0.7));
         }
-        .sample-overlay span:first-child { font-size: 0.65rem; font-weight: 700; color: #fff; }
-        .sample-tag {
-            font-size: 0.55rem;
-            font-weight: 700;
-            padding: 0.1rem 0.35rem;
-            border-radius: 0.2rem;
-            color: #fff;
-        }
-        .sample-tag.positive { background: rgba(192, 57, 43, 0.8); }
-        .sample-tag.healthy { background: rgba(61, 107, 94, 0.8); }
+        .sample-overlay span:first-child { font-family: 'Cinzel', serif; font-size: 0.6rem; font-weight: 600; color: #fff; }
+        .sample-tag { font-family: 'Inter', sans-serif; font-size: 0.5rem; font-weight: 700; padding: 0.1rem 0.3rem; border-radius: 0.15rem; color: #fff; }
+        .sample-tag.pos { background: rgba(155,27,48,0.8); }
+        .sample-tag.neg { background: rgba(45,107,94,0.8); }
 
         /* How it works */
-        .how-it-works { padding: 1.25rem; }
-        .how-title { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-light); margin-bottom: 0.75rem; }
-        .how-step { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.6rem; }
+        .how-section { padding: 1.1rem; background: linear-gradient(var(--ivory), var(--parchment)); }
+        .how-title { font-family: 'Cinzel', serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.7rem; }
+        .how-step { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.5rem; }
         .how-num {
-            width: 1.4rem; height: 1.4rem; border-radius: 0.3rem;
+            width: 1.3rem; height: 1.3rem; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 0.65rem; font-weight: 700; flex-shrink: 0; margin-top: 0.1rem;
+            font-family: 'Cinzel', serif; font-size: 0.6rem; font-weight: 700;
+            flex-shrink: 0; margin-top: 0.1rem;
+            border: 1px solid;
         }
-        .how-text-title { font-size: 0.82rem; font-weight: 600; color: var(--ink); }
-        .how-text-sub { font-size: 0.72rem; color: var(--ink-light); }
+        .how-t { font-family: 'EB Garamond', serif; font-size: 0.88rem; font-weight: 600; color: var(--ink); }
+        .how-s { font-size: 0.78rem; color: var(--ink-soft); font-style: italic; }
 
-        /* File info */
-        .file-info { font-size: 0.7rem; color: var(--ink-light); }
+        /* === RESULTS PANEL — Sapphire glass === */
+        .sapphire-pane {
+            background: var(--sapphire);
+            border: 1px solid var(--sapphire-rim);
+            border-radius: 0.4rem;
+            overflow: hidden;
+            box-shadow: inset 0 2px 12px rgba(0,0,0,0.4), inset 0 0 30px rgba(26,48,80,0.3), 0 1px 0 rgba(255,255,255,0.03);
+            color: var(--ivory);
+        }
 
-        /* Results */
         .results-empty, .results-loading {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 4rem 1rem;
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center; padding: 3.5rem 1rem;
         }
         .empty-icon {
-            width: 4.5rem; height: 4.5rem;
-            border-radius: 1rem;
+            width: 4rem; height: 4rem; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            margin-bottom: 1.25rem;
-            font-size: 1.5rem;
-            background: rgba(0,0,0,0.03);
-            border: 1px solid rgba(0,0,0,0.04);
-            color: rgba(0,0,0,0.15);
+            margin-bottom: 1rem; font-size: 1.3rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.12);
         }
-        .empty-title { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink-light); margin-bottom: 0.35rem; }
-        .empty-desc { font-size: 0.82rem; color: rgba(0,0,0,0.3); max-width: 16rem; line-height: 1.5; }
+        .empty-title { font-family: 'Cinzel', serif; font-size: 1rem; color: rgba(255,255,255,0.4); margin-bottom: 0.3rem; }
+        .empty-desc { font-size: 0.85rem; color: rgba(255,255,255,0.2); max-width: 16rem; line-height: 1.5; }
 
-        /* Loading */
         .loading-spinner {
-            position: relative;
-            width: 3.5rem; height: 3.5rem;
-            margin-bottom: 1.25rem;
+            position: relative; width: 3rem; height: 3rem; margin-bottom: 1rem;
         }
         .loading-spinner::before, .loading-spinner::after {
             content: ''; position: absolute; inset: 0;
-            border-radius: 50%;
-            border: 2.5px solid transparent;
+            border-radius: 50%; border: 2px solid transparent;
         }
-        .loading-spinner::before {
-            border-top-color: var(--coral);
-            animation: spin 1.2s linear infinite;
-        }
-        .loading-spinner::after {
-            inset: 5px;
-            border-bottom-color: #6b5b95;
-            animation: spin 1.8s linear infinite reverse;
-        }
+        .loading-spinner::before { border-top-color: var(--copper-light); animation: spin 1.2s linear infinite; }
+        .loading-spinner::after { inset: 4px; border-bottom-color: var(--patina-glow); animation: spin 1.8s linear infinite reverse; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-bar {
-            width: 10rem; height: 3px;
-            background: rgba(0,0,0,0.06);
-            border-radius: 2px;
-            overflow: hidden;
-            margin-top: 1rem;
-        }
-        .loading-bar-inner {
-            height: 100%; width: 100%;
-            background: linear-gradient(90deg, var(--coral), #6b5b95);
-            border-radius: 2px;
-            animation: loadSlide 2s ease-in-out infinite;
-        }
-        @keyframes loadSlide {
-            0% { transform: translateX(-100%); }
-            50% { transform: translateX(0%); }
-            100% { transform: translateX(100%); }
-        }
+        .load-bar { width: 8rem; height: 2px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; margin-top: 0.75rem; }
+        .load-bar-inner { height: 100%; width: 100%; background: linear-gradient(90deg, var(--copper), var(--patina-glow)); border-radius: 2px; animation: loadSlide 2s ease-in-out infinite; }
+        @keyframes loadSlide { 0%{transform:translateX(-100%)} 50%{transform:translateX(0)} 100%{transform:translateX(100%)} }
 
         /* Error */
         .error-box {
-            background: rgba(192, 57, 43, 0.06);
-            border: 1px solid rgba(192, 57, 43, 0.12);
-            border-radius: 0.6rem;
-            padding: 0.9rem 1rem;
-            display: flex; align-items: flex-start; gap: 0.6rem;
+            margin: 1rem; padding: 0.8rem; border-radius: 0.3rem;
+            background: rgba(155,27,48,0.1); border: 1px solid rgba(155,27,48,0.2);
+            display: flex; align-items: flex-start; gap: 0.5rem;
         }
-        .error-icon { color: var(--coral); font-size: 0.9rem; margin-top: 0.1rem; }
-        .error-title { font-size: 0.82rem; font-weight: 600; color: #a33; }
-        .error-text { font-size: 0.78rem; color: #a33; opacity: 0.7; margin-top: 0.15rem; }
+        .error-box i { color: var(--copper-light); margin-top: 0.1rem; }
+        .err-title { font-family: 'Cinzel', serif; font-size: 0.78rem; color: var(--copper-light); }
+        .err-text { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 0.1rem; }
 
         /* Result badge */
         .result-badge {
-            border-radius: 0.75rem;
-            padding: 1.25rem;
+            margin: 1rem; padding: 1rem 1.1rem; border-radius: 0.4rem;
             animation: fadeIn 0.4s ease-out;
         }
-        .result-badge.tumor {
-            background: linear-gradient(135deg, rgba(192, 57, 43, 0.08), rgba(192, 57, 43, 0.03));
-            border: 1px solid rgba(192, 57, 43, 0.12);
-        }
-        .result-badge.healthy {
-            background: linear-gradient(135deg, rgba(61, 107, 94, 0.08), rgba(61, 107, 94, 0.03));
-            border: 1px solid rgba(61, 107, 94, 0.15);
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+        .result-badge.tumor { background: linear-gradient(135deg, rgba(155,27,48,0.15), rgba(155,27,48,0.05)); border: 1px solid rgba(155,27,48,0.25); }
+        .result-badge.healthy { background: linear-gradient(135deg, rgba(45,107,94,0.15), rgba(45,107,94,0.05)); border: 1px solid rgba(45,107,94,0.2); }
 
-        .result-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
-        .result-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.2rem; }
-        .result-class { font-family: 'DM Serif Display', serif; font-size: 1.8rem; }
-        .result-icon-wrap {
-            width: 3rem; height: 3rem;
-            border-radius: 0.75rem;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.25rem;
-        }
+        .r-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+        .r-label { font-family: 'Cinzel', serif; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.15rem; }
+        .r-class { font-family: 'Cinzel Decorative', serif; font-size: 1.5rem; font-weight: 700; }
+        .r-icon { width: 2.5rem; height: 2.5rem; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
 
-        .confidence-track { width: 100%; height: 6px; border-radius: 3px; background: rgba(0,0,0,0.06); overflow: hidden; }
-        .confidence-fill { height: 100%; border-radius: 3px; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-        .confidence-row { display: flex; justify-content: space-between; font-size: 0.72rem; margin-bottom: 0.3rem; }
-        .confidence-val { font-weight: 700; font-family: 'Inter', monospace; }
+        .conf-row { display: flex; justify-content: space-between; font-size: 0.72rem; margin-bottom: 0.25rem; }
+        .conf-val { font-weight: 700; font-family: 'Inter', monospace; }
+        .conf-track { width: 100%; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.06); overflow: hidden; }
+        .conf-fill { height: 100%; border-radius: 2px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+        .r-meta { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; font-size: 0.7rem; color: rgba(255,255,255,0.4); }
+        .r-meta i { margin-right: 0.15rem; }
 
-        .result-meta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.75rem; font-size: 0.72rem; color: var(--ink-light); }
-        .result-meta i { margin-right: 0.2rem; }
-
-        /* Heatmap section */
-        .heatmap-section {
-            flex: 1;
-            background: rgba(255,255,255,0.5);
-            border-radius: 0.75rem;
-            border: 1px solid rgba(0,0,0,0.05);
-            padding: 1.25rem;
-            margin-top: 1rem;
-        }
-        .heatmap-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
-        .heatmap-title { font-size: 0.85rem; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 0.4rem; }
-        .heatmap-tags { display: flex; gap: 0.3rem; }
-        .heatmap-tag { font-size: 0.6rem; font-weight: 600; background: rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.06); padding: 0.15rem 0.4rem; border-radius: 0.25rem; color: var(--ink-light); }
-        .heatmap-img-wrap {
-            border-radius: 0.6rem;
-            overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.06);
-            background: #1a1a2e;
-        }
-        .heatmap-img { width: 100%; display: block; min-height: 12rem; }
-
-        .heatmap-legend {
-            display: flex; align-items: center; justify-content: space-between;
-            margin-top: 0.75rem;
-            font-size: 0.65rem; color: var(--ink-light);
-        }
-        .legend-bar {
-            display: flex; height: 6px; border-radius: 3px; overflow: hidden; width: 8rem;
-        }
+        /* Heatmap */
+        .heatmap-section { margin: 0 1rem 1rem; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 0.4rem; border: 1px solid rgba(255,255,255,0.04); }
+        .hm-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+        .hm-title { font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.7); display: flex; align-items: center; gap: 0.35rem; }
+        .hm-tags { display: flex; gap: 0.25rem; }
+        .hm-tag { font-family: 'Inter', sans-serif; font-size: 0.5rem; font-weight: 600; padding: 0.12rem 0.35rem; border-radius: 0.15rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.35); }
+        .hm-img-wrap { border-radius: 0.3rem; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); background: #050a14; }
+        .hm-img { width: 100%; display: block; min-height: 10rem; }
+        .hm-legend { display: flex; align-items: center; justify-content: space-between; margin-top: 0.6rem; font-size: 0.6rem; color: rgba(255,255,255,0.25); }
+        .legend-bar { display: flex; height: 4px; border-radius: 2px; overflow: hidden; width: 7rem; }
         .legend-bar div { flex: 1; }
 
         /* Verified note */
-        .verified-note {
-            margin-top: 1rem;
-            padding: 0.75rem 1rem;
-            background: rgba(61, 107, 94, 0.06);
-            border: 1px solid rgba(61, 107, 94, 0.1);
-            border-radius: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-        .verified-note i { color: var(--forest-light); font-size: 0.9rem; }
-        .verified-text { font-size: 0.75rem; color: var(--ink-light); }
-        .verified-text strong { color: var(--ink); }
+        .verified { margin: 0 1rem 1rem; padding: 0.7rem 0.9rem; border-radius: 0.3rem; background: rgba(45,107,94,0.08); border: 1px solid rgba(45,107,94,0.12); display: flex; align-items: center; gap: 0.5rem; }
+        .verified i { color: var(--patina-glow); font-size: 0.8rem; }
+        .verified p { font-size: 0.72rem; color: rgba(255,255,255,0.35); }
+        .verified strong { color: rgba(255,255,255,0.6); }
 
         /* Footer */
         .footer {
-            max-width: 72rem;
-            margin: 0 auto;
-            padding: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.04);
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.5rem;
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.2);
+            max-width: 72rem; margin: 0 auto; padding: 1.5rem;
+            border-top: 1px solid rgba(184,115,51,0.1);
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem;
+            font-size: 0.7rem; color: rgba(255,255,255,0.15);
         }
-        .footer a { color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.15s; }
-        .footer a:hover { color: var(--coral); }
+        .footer a { color: rgba(255,255,255,0.2); text-decoration: none; transition: color 0.15s; }
+        .footer a:hover { color: var(--copper-light); }
 
         .hidden { display: none !important; }
-
-        /* Responsive */
-        @media (max-width: 1023px) {
-            .main-grid { padding: 0 0.75rem 3rem; }
-        }
     </style>
 </head>
 <body>
-<div class="page-wrap">
+<div class="page">
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="navbar-inner">
+    <!-- Copper Banner -->
+    <nav class="copper-banner">
+        <div class="banner-inner">
             <div class="brand">
                 <div class="brand-icon"><i class="fa-solid fa-brain"></i></div>
-                <div class="brand-name">NeuroVision<span>AI</span></div>
+                <div class="brand-name">NeuroVisionAI</div>
+                <span class="etched-text">Powered by Deep Learning & Grad-CAM</span>
             </div>
-            <div class="status-pill">
-                <div class="status-badge" id="statusBadge">
-                    <span class="status-dot"></span>
-                    Model Online
+            <div style="display:flex;align-items:center;">
+                <div class="brass-gauge" title="Model Status">
+                    <div class="gauge-face" id="gaugeFace">
+                        <span class="gauge-dot" id="gaugeDot"></span>
+                        <span class="gauge-text" id="gaugeText">ONLINE</span>
+                    </div>
                 </div>
-                <span class="status-timestamp" id="statusTime">Last checked: just now</span>
+                <span class="gauge-time" id="statusTime">Checked just now</span>
             </div>
         </div>
     </nav>
 
     <!-- Hero -->
     <div class="hero">
-        <p class="hero-powered">Powered by Deep Learning & Grad-CAM</p>
-        <h1>Brain Tumor Detection System</h1>
-        <p class="hero-desc">
+        <p class="hero-powered">✦ Powered by Deep Learning & Grad-CAM ✦</p>
+        <h1>Brain Tumor<br>Detection System</h1>
+        <div class="hero-tagline">
             A tool built to partner with you, providing swift, explainable insights for patient-centered care.
-        </p>
+        </div>
     </div>
 
     <!-- Main Grid -->
     <div class="main-grid">
 
-        <!-- LEFT COLUMN -->
+        <!-- LEFT -->
         <div style="display:flex;flex-direction:column;gap:1.25rem;">
 
-            <!-- Upload Card -->
-            <div class="card">
-                <div class="card-header">
-                    <h2>
-                        <span class="step-num" style="background:rgba(107,91,149,0.1);color:#6b5b95;">1</span>
-                        Upload Scan
-                    </h2>
-                    <span class="file-info hidden" id="fileInfo"></span>
+            <!-- Upload Module -->
+            <div class="module">
+                <div class="module-header">
+                    <h2><span class="module-num">1</span> Upload Scan</h2>
+                    <span class="file-info-text hidden" id="fileInfo"></span>
                 </div>
-                <div class="card-body">
+                <div class="module-body">
                     <div class="dropzone" id="dropzone">
                         <input type="file" id="fileInput" class="hidden" accept=".jpg,.jpeg,.png">
-                        <div class="dropzone-icon">
-                            <i class="fa-solid fa-file-medical"></i>
-                        </div>
-                        <p class="dropzone-title">Start by selecting your MRI file here</p>
-                        <p class="dropzone-sub">or drag & drop &middot; JPG, PNG accepted</p>
+                        <div class="dz-icon"><i class="fa-solid fa-file-medical"></i></div>
+                        <p class="dz-title">Start by selecting your MRI file here</p>
+                        <p class="dz-sub">or drag &amp; drop &middot; JPG, PNG accepted</p>
                     </div>
-
                     <div class="preview-wrap hidden" id="previewContainer">
                         <div class="preview-img-wrap">
                             <img id="imagePreview" class="preview-img" src="" alt="MRI Preview">
@@ -607,152 +610,126 @@
             </div>
 
             <!-- Sample Scans -->
-            <div class="card">
-                <div class="card-header">
-                    <h2 style="font-family:'Inter',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-light);">
-                        <i class="fa-solid fa-images" style="opacity:0.5;font-size:0.7rem;"></i>
-                        Quick Test Samples
-                    </h2>
+            <div class="module">
+                <div class="copper-ribbon">
+                    <h3>✦ Quick Test Samples ✦</h3>
                 </div>
-                <div class="card-body">
-                    <div class="samples-grid">
-                        <button class="sample-btn" onclick="loadSample('/static/samples/yes/sample1.jpg','tumor_scan_1.jpg')">
-                            <img src="/static/samples/yes/sample1.jpg" alt="Tumor 1">
-                            <div class="sample-overlay"><span>Tumor</span><span class="sample-tag positive">Positive</span></div>
-                        </button>
-                        <button class="sample-btn" onclick="loadSample('/static/samples/yes/sample2.jpg','tumor_scan_2.jpg')">
-                            <img src="/static/samples/yes/sample2.jpg" alt="Tumor 2">
-                            <div class="sample-overlay"><span>Tumor</span><span class="sample-tag positive">Positive</span></div>
-                        </button>
-                        <button class="sample-btn" onclick="loadSample('/static/samples/no/sample1.jpg','normal_scan_1.jpg')">
-                            <img src="/static/samples/no/sample1.jpg" alt="Normal 1">
-                            <div class="sample-overlay"><span>Normal</span><span class="sample-tag healthy">Healthy</span></div>
-                        </button>
-                        <button class="sample-btn" onclick="loadSample('/static/samples/no/sample2.jpg','normal_scan_2.jpg')">
-                            <img src="/static/samples/no/sample2.jpg" alt="Normal 2">
-                            <div class="sample-overlay"><span>Normal</span><span class="sample-tag healthy">Healthy</span></div>
-                        </button>
-                    </div>
+                <div class="samples-grid">
+                    <button class="sample-btn" onclick="loadSample('/static/samples/yes/sample1.jpg','tumor_scan_1.jpg')">
+                        <img src="/static/samples/yes/sample1.jpg" alt="Tumor 1">
+                        <div class="sample-overlay"><span>Tumor</span><span class="sample-tag pos">Positive</span></div>
+                    </button>
+                    <button class="sample-btn" onclick="loadSample('/static/samples/yes/sample2.jpg','tumor_scan_2.jpg')">
+                        <img src="/static/samples/yes/sample2.jpg" alt="Tumor 2">
+                        <div class="sample-overlay"><span>Tumor</span><span class="sample-tag pos">Positive</span></div>
+                    </button>
+                    <button class="sample-btn" onclick="loadSample('/static/samples/no/sample1.jpg','normal_scan_1.jpg')">
+                        <img src="/static/samples/no/sample1.jpg" alt="Normal 1">
+                        <div class="sample-overlay"><span>Normal</span><span class="sample-tag neg">Healthy</span></div>
+                    </button>
+                    <button class="sample-btn" onclick="loadSample('/static/samples/no/sample2.jpg','normal_scan_2.jpg')">
+                        <img src="/static/samples/no/sample2.jpg" alt="Normal 2">
+                        <div class="sample-overlay"><span>Normal</span><span class="sample-tag neg">Healthy</span></div>
+                    </button>
                 </div>
             </div>
 
             <!-- How It Works -->
-            <div class="card">
-                <div class="how-it-works">
+            <div class="module">
+                <div class="how-section">
                     <p class="how-title">How It Works</p>
                     <div class="how-step">
-                        <div class="how-num" style="background:rgba(107,91,149,0.1);color:#6b5b95;">1</div>
-                        <div><p class="how-text-title">Upload</p><p class="how-text-sub">Select a brain MRI scan (JPG/PNG)</p></div>
+                        <div class="how-num" style="background:rgba(184,115,51,0.08);border-color:var(--copper);color:var(--copper);">1</div>
+                        <div><p class="how-t">Upload</p><p class="how-s">Select a brain MRI scan (JPG / PNG)</p></div>
                     </div>
                     <div class="how-step">
-                        <div class="how-num" style="background:rgba(224,122,95,0.1);color:var(--coral);">2</div>
-                        <div><p class="how-text-title">Analyze</p><p class="how-text-sub">Our CNN processes & classifies the scan</p></div>
+                        <div class="how-num" style="background:rgba(74,139,127,0.08);border-color:var(--patina);color:var(--patina);">2</div>
+                        <div><p class="how-t">Analyze</p><p class="how-s">Our CNN processes &amp; classifies the scan</p></div>
                     </div>
                     <div class="how-step">
-                        <div class="how-num" style="background:rgba(61,107,94,0.1);color:var(--forest-light);">3</div>
-                        <div><p class="how-text-title">Explain</p><p class="how-text-sub">Grad-CAM highlights where the model looked</p></div>
+                        <div class="how-num" style="background:rgba(212,175,55,0.08);border-color:var(--gold-dim);color:var(--gold);">3</div>
+                        <div><p class="how-t">Explain</p><p class="how-s">Grad-CAM reveals where the model looked</p></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- RIGHT COLUMN: Results -->
+        <!-- RIGHT — Sapphire Glass Results -->
         <div>
-            <div class="card" style="height:100%;display:flex;flex-direction:column;">
-                <div class="card-header">
-                    <h2>
-                        <span class="step-num" style="background:rgba(61,107,94,0.1);color:var(--forest);">2</span>
-                        Analysis Results
-                    </h2>
-                    <span class="file-info hidden" id="analysisTime"></span>
+            <div class="module" style="height:100%;display:flex;flex-direction:column;">
+                <div class="module-header">
+                    <h2><span class="module-num">2</span> Analysis Results</h2>
+                    <span class="file-info-text hidden" id="analysisTime"></span>
                 </div>
-                <div class="card-body" style="flex:1;display:flex;flex-direction:column;">
+                <div class="sapphire-pane" style="flex:1;display:flex;flex-direction:column;">
 
-                    <!-- Empty State -->
+                    <!-- Empty -->
                     <div class="results-empty" id="resultsEmpty">
                         <div class="empty-icon"><i class="fa-solid fa-microscope"></i></div>
                         <p class="empty-title">Awaiting Your Scan</p>
-                        <p class="empty-desc">Upload an MRI image or choose a sample to begin analysis. Results will appear here with full explainability.</p>
+                        <p class="empty-desc">Upload an MRI image or choose a sample to begin. Results will appear within this viewing pane.</p>
                     </div>
 
-                    <!-- Loading State -->
+                    <!-- Loading -->
                     <div class="results-loading hidden" id="loading">
                         <div class="loading-spinner"></div>
-                        <p class="empty-title" style="margin-bottom:0.25rem;">Processing Scan</p>
-                        <p class="empty-desc">Running inference & computing Grad-CAM heatmap...</p>
-                        <div class="loading-bar"><div class="loading-bar-inner"></div></div>
+                        <p class="empty-title" style="margin-bottom:0.2rem;">Processing Scan</p>
+                        <p class="empty-desc">Running inference &amp; computing Grad-CAM...</p>
+                        <div class="load-bar"><div class="load-bar-inner"></div></div>
                     </div>
 
-                    <!-- Error State -->
-                    <div class="hidden" id="errorMsg" style="margin-bottom:1rem;">
+                    <!-- Error -->
+                    <div class="hidden" id="errorMsg">
                         <div class="error-box">
-                            <i class="fa-solid fa-triangle-exclamation error-icon"></i>
-                            <div>
-                                <p class="error-title">Analysis Failed</p>
-                                <p class="error-text" id="errorText"></p>
-                            </div>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <div><p class="err-title">Analysis Failed</p><p class="err-text" id="errorText"></p></div>
                         </div>
                     </div>
 
                     <!-- Results -->
                     <div class="hidden" id="resultsContainer" style="flex:1;display:flex;flex-direction:column;">
-
-                        <!-- Prediction Card -->
                         <div class="result-badge" id="resultBadge">
-                            <div class="result-top">
+                            <div class="r-top">
                                 <div>
-                                    <p class="result-label" id="resultLabelText">Observation</p>
-                                    <h3 class="result-class" id="resultClass"></h3>
+                                    <p class="r-label" id="resultLabelText">Observation</p>
+                                    <h3 class="r-class" id="resultClass"></h3>
                                 </div>
-                                <div class="result-icon-wrap" id="resultIcon"></div>
+                                <div class="r-icon" id="resultIcon"></div>
                             </div>
-                            <div class="confidence-row">
-                                <span style="opacity:0.6">Confidence</span>
-                                <span class="confidence-val" id="resultConfidence"></span>
+                            <div class="conf-row">
+                                <span style="opacity:0.5;font-size:0.68rem;">Confidence</span>
+                                <span class="conf-val" id="resultConfidence"></span>
                             </div>
-                            <div class="confidence-track">
-                                <div class="confidence-fill" id="confidenceBar" style="width:0%"></div>
-                            </div>
-                            <div class="result-meta">
+                            <div class="conf-track"><div class="conf-fill" id="confidenceBar" style="width:0%"></div></div>
+                            <div class="r-meta">
                                 <span><i class="fa-solid fa-chart-simple"></i> Probability: <strong id="resultProb" style="font-family:monospace;"></strong></span>
                                 <span><i class="fa-solid fa-file-image"></i> <span id="resultFilename"></span></span>
                             </div>
                         </div>
 
-                        <!-- Heatmap -->
                         <div class="heatmap-section">
-                            <div class="heatmap-header">
-                                <p class="heatmap-title">
-                                    <i class="fa-solid fa-layer-group" style="color:#6b5b95;"></i>
-                                    Grad-CAM Explainability
-                                </p>
-                                <div class="heatmap-tags">
-                                    <span class="heatmap-tag">Original</span>
-                                    <span class="heatmap-tag">Heatmap</span>
-                                    <span class="heatmap-tag">Overlay</span>
-                                </div>
+                            <div class="hm-header">
+                                <p class="hm-title"><i class="fa-solid fa-layer-group" style="color:var(--copper-light);"></i> Grad-CAM Explainability</p>
+                                <div class="hm-tags"><span class="hm-tag">Original</span><span class="hm-tag">Heatmap</span><span class="hm-tag">Overlay</span></div>
                             </div>
-                            <div class="heatmap-img-wrap">
-                                <img id="heatmapImage" class="heatmap-img" src="" alt="Grad-CAM Heatmap">
-                            </div>
-                            <div class="heatmap-legend">
-                                <div style="display:flex;align-items:center;gap:0.4rem;">
+                            <div class="hm-img-wrap"><img id="heatmapImage" class="hm-img" src="" alt="Grad-CAM"></div>
+                            <div class="hm-legend">
+                                <div style="display:flex;align-items:center;gap:0.35rem;">
                                     <div class="legend-bar">
-                                        <div style="background:#3b5998;"></div>
-                                        <div style="background:#2ecc71;"></div>
-                                        <div style="background:#f1c40f;"></div>
-                                        <div style="background:#e74c3c;"></div>
+                                        <div style="background:#2c3e6b;"></div>
+                                        <div style="background:#27ae60;"></div>
+                                        <div style="background:#f39c12;"></div>
+                                        <div style="background:#c0392b;"></div>
                                     </div>
                                     <span>Low → High Attention</span>
                                 </div>
-                                <span style="font-style:italic;">Red regions most influenced the prediction</span>
+                                <span style="font-style:italic;">Amber &amp; ruby regions most influenced the prediction</span>
                             </div>
                         </div>
 
-                        <!-- Verified Note -->
-                        <div class="verified-note">
+                        <div class="verified">
                             <i class="fa-solid fa-shield-check"></i>
-                            <p class="verified-text"><strong>AI-Assisted Analysis</strong> — This result is generated by a convolutional neural network and should be reviewed by a qualified radiologist before clinical use.</p>
+                            <p><strong>AI-Assisted Analysis</strong> — Generated by a convolutional neural network. Should be reviewed by a qualified radiologist before clinical use.</p>
                         </div>
                     </div>
                 </div>
@@ -760,7 +737,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <p>&copy; 2026 NeuroVision AI &middot; Brain Tumor Detection System</p>
         <div style="display:flex;align-items:center;gap:0.75rem;">
@@ -776,170 +752,133 @@
 (() => {
     const $ = id => document.getElementById(id);
     const el = {
-        dropzone: $('dropzone'), fileInput: $('fileInput'),
-        previewContainer: $('previewContainer'), imagePreview: $('imagePreview'),
-        clearBtn: $('clearBtn'), analyzeBtn: $('analyzeBtn'),
-        fileInfo: $('fileInfo'), loading: $('loading'),
-        errorMsg: $('errorMsg'), errorText: $('errorText'),
-        resultsEmpty: $('resultsEmpty'), resultsContainer: $('resultsContainer'),
-        resultBadge: $('resultBadge'), resultClass: $('resultClass'),
-        resultConfidence: $('resultConfidence'), resultLabelText: $('resultLabelText'),
-        resultIcon: $('resultIcon'), resultProb: $('resultProb'),
-        resultFilename: $('resultFilename'), confidenceBar: $('confidenceBar'),
-        heatmapImage: $('heatmapImage'), analysisTime: $('analysisTime'),
-        statusBadge: $('statusBadge'), statusTime: $('statusTime'),
+        dropzone:$('dropzone'),fileInput:$('fileInput'),
+        previewContainer:$('previewContainer'),imagePreview:$('imagePreview'),
+        clearBtn:$('clearBtn'),analyzeBtn:$('analyzeBtn'),
+        fileInfo:$('fileInfo'),loading:$('loading'),
+        errorMsg:$('errorMsg'),errorText:$('errorText'),
+        resultsEmpty:$('resultsEmpty'),resultsContainer:$('resultsContainer'),
+        resultBadge:$('resultBadge'),resultClass:$('resultClass'),
+        resultConfidence:$('resultConfidence'),resultLabelText:$('resultLabelText'),
+        resultIcon:$('resultIcon'),resultProb:$('resultProb'),
+        resultFilename:$('resultFilename'),confidenceBar:$('confidenceBar'),
+        heatmapImage:$('heatmapImage'),analysisTime:$('analysisTime'),
+        gaugeFace:$('gaugeFace'),gaugeDot:$('gaugeDot'),gaugeText:$('gaugeText'),statusTime:$('statusTime'),
     };
 
     let currentFile = null;
 
-    // Events
     el.dropzone.addEventListener('click', () => el.fileInput.click());
-    el.fileInput.addEventListener('change', e => { if (e.target.files.length) handleFile(e.target.files[0]); });
+    el.fileInput.addEventListener('change', e => { if(e.target.files.length) handleFile(e.target.files[0]); });
     el.clearBtn.addEventListener('click', clearFile);
     el.analyzeBtn.addEventListener('click', runAnalysis);
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Enter' && currentFile && !el.analyzeBtn.disabled) runAnalysis();
-    });
+    document.addEventListener('keydown', e => { if(e.key==='Enter'&&currentFile&&!el.analyzeBtn.disabled) runAnalysis(); });
 
-    ['dragover','dragenter'].forEach(ev =>
-        el.dropzone.addEventListener(ev, e => { e.preventDefault(); el.dropzone.classList.add('drag-active'); })
-    );
-    ['dragleave','drop'].forEach(ev =>
-        el.dropzone.addEventListener(ev, e => { e.preventDefault(); el.dropzone.classList.remove('drag-active'); })
-    );
-    el.dropzone.addEventListener('drop', e => {
-        if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
-    });
+    ['dragover','dragenter'].forEach(ev => el.dropzone.addEventListener(ev, e => { e.preventDefault(); el.dropzone.classList.add('drag-active'); }));
+    ['dragleave','drop'].forEach(ev => el.dropzone.addEventListener(ev, e => { e.preventDefault(); el.dropzone.classList.remove('drag-active'); }));
+    el.dropzone.addEventListener('drop', e => { if(e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]); });
 
     function handleFile(file) {
-        if (!['image/jpeg','image/jpg','image/png'].includes(file.type)) {
-            showError('Invalid file type. Please upload a JPG or PNG image.'); return;
-        }
+        if(!['image/jpeg','image/jpg','image/png'].includes(file.type)) { showError('Invalid file type. Please upload JPG or PNG.'); return; }
         currentFile = file;
         hideError();
         el.fileInfo.textContent = `${file.name} (${(file.size/1024).toFixed(0)} KB)`;
         el.fileInfo.classList.remove('hidden');
-        const reader = new FileReader();
-        reader.onload = e => {
-            el.imagePreview.src = e.target.result;
-            el.dropzone.classList.add('hidden');
-            el.previewContainer.classList.remove('hidden');
-            setState('empty');
-        };
-        reader.readAsDataURL(file);
+        const r = new FileReader();
+        r.onload = e => { el.imagePreview.src=e.target.result; el.dropzone.classList.add('hidden'); el.previewContainer.classList.remove('hidden'); setState('empty'); };
+        r.readAsDataURL(file);
     }
 
     function clearFile() {
-        currentFile = null;
-        el.fileInput.value = '';
-        el.previewContainer.classList.add('hidden');
-        el.dropzone.classList.remove('hidden');
-        el.fileInfo.classList.add('hidden');
-        setState('empty');
-        hideError();
+        currentFile=null; el.fileInput.value='';
+        el.previewContainer.classList.add('hidden'); el.dropzone.classList.remove('hidden');
+        el.fileInfo.classList.add('hidden'); setState('empty'); hideError();
     }
 
     function setState(s) {
-        el.resultsEmpty.classList.toggle('hidden', s !== 'empty');
-        el.loading.classList.toggle('hidden', s !== 'loading');
-        el.resultsContainer.classList.toggle('hidden', s !== 'results');
+        el.resultsEmpty.classList.toggle('hidden',s!=='empty');
+        el.loading.classList.toggle('hidden',s!=='loading');
+        el.resultsContainer.classList.toggle('hidden',s!=='results');
     }
 
-    function showError(msg) { el.errorText.textContent = msg; el.errorMsg.classList.remove('hidden'); setState('empty'); }
+    function showError(m) { el.errorText.textContent=m; el.errorMsg.classList.remove('hidden'); setState('empty'); }
     function hideError() { el.errorMsg.classList.add('hidden'); }
 
-    window.loadSample = async function(url, filename) {
-        try {
-            const res = await fetch(url);
-            const blob = await res.blob();
-            handleFile(new File([blob], filename, { type: blob.type }));
-            setTimeout(runAnalysis, 200);
-        } catch { showError('Failed to load sample image.'); }
+    window.loadSample = async function(url, fn) {
+        try { const r=await fetch(url); const b=await r.blob(); handleFile(new File([b],fn,{type:b.type})); setTimeout(runAnalysis,200); }
+        catch { showError('Failed to load sample.'); }
     };
 
     async function runAnalysis() {
-        if (!currentFile) return;
+        if(!currentFile) return;
         hideError(); setState('loading');
-        el.analyzeBtn.disabled = true;
-        const t0 = performance.now();
-        const fd = new FormData();
-        fd.append('file', currentFile);
-
+        el.analyzeBtn.disabled=true;
+        const t0=performance.now();
+        const fd=new FormData(); fd.append('file',currentFile);
         try {
-            const res = await fetch('/predict/explain', { method: 'POST', body: fd });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.detail || `Server error (${res.status})`);
-
-            const elapsed = ((performance.now() - t0) / 1000).toFixed(1);
-            el.analysisTime.textContent = `Completed in ${elapsed}s`;
+            const res=await fetch('/predict/explain',{method:'POST',body:fd});
+            const data=await res.json();
+            if(!res.ok) throw new Error(data.detail||`Server error (${res.status})`);
+            el.analysisTime.textContent=`${((performance.now()-t0)/1000).toFixed(1)}s`;
             el.analysisTime.classList.remove('hidden');
             renderResults(data);
-        } catch (err) {
-            showError(err.message || 'Analysis failed.');
-        } finally {
-            el.analyzeBtn.disabled = false;
-        }
+        } catch(err) { showError(err.message||'Analysis failed.'); }
+        finally { el.analyzeBtn.disabled=false; }
     }
 
     function renderResults(data) {
         setState('results');
-        const isTumor = data.prediction === 'Tumor';
-        const pct = (data.confidence * 100).toFixed(1);
-
-        el.resultClass.textContent = isTumor ? 'Potential Tumor Detected' : 'No Tumor Detected';
-        el.resultConfidence.textContent = `${pct}%`;
+        const isTumor = data.prediction==='Tumor';
+        const pct = (data.confidence*100).toFixed(1);
+        el.resultClass.textContent = isTumor?'Potential Tumor Detected':'No Tumor Detected';
+        el.resultConfidence.textContent = pct+'%';
         el.resultProb.textContent = data.probability.toFixed(4);
         el.resultFilename.textContent = data.filename;
+        el.confidenceBar.style.width='0%';
+        requestAnimationFrame(()=>{el.confidenceBar.style.width=pct+'%';});
 
-        el.confidenceBar.style.width = '0%';
-        requestAnimationFrame(() => { el.confidenceBar.style.width = pct + '%'; });
-
-        if (isTumor) {
-            el.resultBadge.className = 'result-badge tumor';
-            el.resultLabelText.style.color = '#a33';
-            el.resultClass.style.color = '#8b2020';
-            el.resultIcon.style.background = 'rgba(192,57,43,0.1)';
-            el.resultIcon.style.color = '#c0392b';
-            el.resultIcon.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i>';
-            el.confidenceBar.style.background = 'linear-gradient(90deg, #c0392b, #e07a5f)';
+        if(isTumor) {
+            el.resultBadge.className='result-badge tumor';
+            el.resultLabelText.style.color='#c05050';
+            el.resultClass.style.color='#d06060';
+            el.resultIcon.style.background='rgba(155,27,48,0.15)';
+            el.resultIcon.style.color='#c05050';
+            el.resultIcon.innerHTML='<i class="fa-solid fa-circle-exclamation"></i>';
+            el.confidenceBar.style.background='linear-gradient(90deg,#9b1b30,var(--copper-light))';
         } else {
-            el.resultBadge.className = 'result-badge healthy';
-            el.resultLabelText.style.color = 'var(--forest)';
-            el.resultClass.style.color = 'var(--forest)';
-            el.resultIcon.style.background = 'rgba(61,107,94,0.1)';
-            el.resultIcon.style.color = 'var(--forest-light)';
-            el.resultIcon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
-            el.confidenceBar.style.background = 'linear-gradient(90deg, var(--forest), var(--forest-light))';
+            el.resultBadge.className='result-badge healthy';
+            el.resultLabelText.style.color='var(--patina-glow)';
+            el.resultClass.style.color='var(--patina-glow)';
+            el.resultIcon.style.background='rgba(45,107,94,0.15)';
+            el.resultIcon.style.color='var(--patina-glow)';
+            el.resultIcon.innerHTML='<i class="fa-solid fa-circle-check"></i>';
+            el.confidenceBar.style.background='linear-gradient(90deg,var(--patina-dark),var(--patina-glow))';
         }
-
-        el.heatmapImage.src = data.heatmap_path + '?t=' + Date.now();
-
-        if (window.innerWidth < 1024) {
-            el.resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        el.heatmapImage.src=data.heatmap_path+'?t='+Date.now();
+        if(window.innerWidth<1024) el.resultsContainer.scrollIntoView({behavior:'smooth',block:'start'});
     }
 
-    // Health check
     function checkHealth() {
-        fetch('/health').then(r => r.json()).then(d => {
-            const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            el.statusTime.textContent = `Last checked: ${now}`;
-            if (!d.model_loaded) {
-                el.statusBadge.innerHTML = '<span class="status-dot" style="background:#f39c12;animation:none;"></span> Model Loading';
-                el.statusBadge.style.background = 'rgba(243,156,18,0.1)';
-                el.statusBadge.style.borderColor = 'rgba(243,156,18,0.2)';
-                el.statusBadge.style.color = '#f39c12';
+        fetch('/health').then(r=>r.json()).then(d=>{
+            const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+            el.statusTime.textContent='Checked '+t;
+            if(!d.model_loaded){
+                el.gaugeDot.style.background='#f39c12';
+                el.gaugeDot.style.boxShadow='0 0 4px #f39c12';
+                el.gaugeText.textContent='LOADING';
+                el.gaugeText.style.color='#f39c12';
             }
-        }).catch(() => {
-            el.statusBadge.innerHTML = '<span class="status-dot" style="background:#c0392b;animation:none;"></span> Offline';
-            el.statusBadge.style.background = 'rgba(192,57,43,0.1)';
-            el.statusBadge.style.borderColor = 'rgba(192,57,43,0.2)';
-            el.statusBadge.style.color = '#c0392b';
-            el.statusTime.textContent = 'Server unreachable';
+        }).catch(()=>{
+            el.gaugeDot.style.background='#c0392b';
+            el.gaugeDot.style.boxShadow='0 0 4px #c0392b';
+            el.gaugeDot.style.animation='none';
+            el.gaugeText.textContent='OFFLINE';
+            el.gaugeText.style.color='#c0392b';
+            el.statusTime.textContent='Unreachable';
         });
     }
     checkHealth();
-    setInterval(checkHealth, 120000); // Re-check every 2 min
+    setInterval(checkHealth,120000);
 })();
 </script>
 </body>
