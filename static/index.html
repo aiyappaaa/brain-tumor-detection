@@ -5,758 +5,594 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeuroVision AI — Brain Tumor Detection</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Pinyon+Script&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --mahogany: #1a0e08;
-            --mahogany-mid: #2a1810;
-            --leather: #1a1a30;
-            --leather-light: #252540;
-            --leather-stitch: #3a3a58;
-            --brass: #b8962e;
-            --brass-light: #d4b44a;
-            --brass-dark: #8a6e1a;
-            --brass-shine: #e8cc60;
-            --brass-shadow: #6a5010;
-            --gold-leaf: #c9a830;
-            --gold-burnished: #a08520;
-            --prussian: #003153;
-            --prussian-light: #1a4a6a;
-            --jade: #50c878;
-            --jade-glow: #70e898;
-            --jade-dark: #308858;
-            --ivory: #f6f0e0;
-            --parchment: #ede4cc;
-            --parchment-dark: #d8ccaa;
-            --cream: #faf5ea;
-            --saddle: #8b4513;
-            --saddle-light: #a0603a;
-            --ink: #1a1520;
-            --ink-soft: #5a5068;
+            --bg-purple: #2c1b3d;
+            --gold: #d4af37;
+            --gold-dark: #b5952f;
+            --gold-light: #f3d56a;
+            --cream: #fdfbf7;
+            --text-dark: #1a1a1a;
+            --text-muted: #555555;
+            --green: #2ecc71;
+            --red: #e74c3c;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* === MAHOGANY DESK === */
         body {
-            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-family: "Times New Roman", Times, serif;
+            background-color: var(--bg-purple);
+            color: var(--text-dark);
             min-height: 100vh;
-            overflow-x: hidden;
-            background:
-                repeating-linear-gradient(85deg, transparent, rgba(80,40,10,0.03) 1px, transparent 2px, transparent 8px),
-                repeating-linear-gradient(88deg, transparent, rgba(60,30,8,0.02) 1px, transparent 1.5px, transparent 5px),
-                linear-gradient(180deg, var(--mahogany) 0%, var(--mahogany-mid) 40%, var(--mahogany) 100%);
-            background-attachment: fixed;
-            color: var(--ink);
-        }
-
-        /* Tungsten warm light */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -15%;
-            left: 25%;
-            width: 50%;
-            height: 50%;
-            background: radial-gradient(ellipse, rgba(255,200,100,0.06) 0%, transparent 65%);
-            pointer-events: none;
-        }
-
-        .page { position: relative; z-index: 1; max-width: 76rem; margin: 0 auto; padding: 1.5rem; }
-
-        /* === LEATHER FOLIO === */
-        .folio {
-            background:
-                repeating-linear-gradient(170deg, transparent, rgba(255,255,255,0.008) 1px, transparent 2px, transparent 4px),
-                linear-gradient(135deg, var(--leather) 0%, var(--leather-light) 50%, var(--leather) 100%);
-            border-radius: 0.75rem;
-            border: 2px solid var(--leather-stitch);
-            box-shadow:
-                0 0 0 4px var(--leather),
-                0 0 0 5px var(--leather-stitch),
-                0 0 0 9px var(--leather),
-                0 0 0 10px rgba(184,150,46,0.15),
-                0 12px 40px rgba(0,0,0,0.5),
-                0 4px 12px rgba(0,0,0,0.3);
-            padding: 0;
-            overflow: hidden;
-            position: relative;
-        }
-        /* Stitching effect */
-        .folio::before {
-            content: '';
-            position: absolute;
-            inset: 6px;
-            border: 1.5px dashed rgba(100,100,140,0.15);
-            border-radius: 0.5rem;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* === BRASS PLATE HEADER === */
-        .brass-plate {
-            margin: 1.25rem 1.25rem 0;
-            padding: 0.9rem 1.25rem;
-            border-radius: 0.35rem;
-            position: relative;
-            /* Brushed brass */
-            background:
-                repeating-linear-gradient(92deg, transparent, rgba(255,255,255,0.03) 1px, transparent 1.5px, transparent 3px),
-                linear-gradient(180deg, var(--brass-light) 0%, var(--brass) 40%, var(--brass-dark) 100%);
-            border: 1px solid var(--brass-shadow);
-            box-shadow:
-                0 2px 8px rgba(0,0,0,0.3),
-                inset 0 1px 0 rgba(255,255,255,0.15),
-                inset 0 -1px 0 rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 2;
-        }
-        /* Rivets */
-        .brass-plate::before, .brass-plate::after {
-            content: '';
-            position: absolute;
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, var(--brass-shine), var(--brass-dark));
-            border: 1px solid var(--brass-shadow);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.3), inset 0 0.5px 0 rgba(255,255,255,0.2);
-            top: 50%;
-            transform: translateY(-50%);
-        }
-        .brass-plate::before { left: 0.6rem; }
-        .brass-plate::after { right: 0.6rem; }
-
-        .plate-left {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-left: 1.25rem;
-        }
-        /* Brain seal */
-        .brain-seal {
-            width: 2rem; height: 2rem;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            background: radial-gradient(circle at 30% 30%, var(--brass-shine), var(--brass-dark));
-            border: 1.5px solid var(--brass-shadow);
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.2), 0 1px 3px rgba(0,0,0,0.2);
-            color: var(--mahogany-mid);
-            font-size: 0.8rem;
-        }
-        .plate-text {
             display: flex;
             flex-direction: column;
-            gap: 0.1rem;
-        }
-        .plate-brand {
-            font-family: 'Cinzel Decorative', serif;
-            font-weight: 900;
-            font-size: 0.95rem;
-            letter-spacing: 0.12em;
-            /* Engraved look */
-            color: var(--mahogany-mid);
-            text-shadow: 0 1px 0 rgba(255,255,255,0.15);
-        }
-        .plate-sub {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 0.6rem;
-            font-style: italic;
-            letter-spacing: 0.06em;
-            color: var(--mahogany-mid);
-            opacity: 0.6;
         }
 
-        /* Jade cabochon */
-        .jade-mount {
-            margin-right: 1.25rem;
+        /* Header - Gold Panel */
+        .header {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+            color: var(--text-dark);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .brand-container {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 1rem;
         }
-        .jade-stone {
-            width: 1.1rem; height: 1.1rem;
+
+        .brand-logo {
+            font-size: 2rem;
+        }
+
+        .brand-text-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .brand-subtitle {
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .status-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.2rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .status-light {
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            /* Polished jade cabochon */
-            background: radial-gradient(circle at 35% 30%, var(--jade-glow), var(--jade), var(--jade-dark));
-            border: 2px solid var(--brass-dark);
-            box-shadow:
-                0 0 6px rgba(80,200,120,0.3),
-                0 0 12px rgba(80,200,120,0.15),
-                inset 0 1px 2px rgba(255,255,255,0.3),
-                0 1px 3px rgba(0,0,0,0.3);
-            animation: jadeGlow 3s ease-in-out infinite;
-        }
-        @keyframes jadeGlow {
-            0%,100% { box-shadow: 0 0 4px rgba(80,200,120,0.25), inset 0 1px 2px rgba(255,255,255,0.3), 0 1px 3px rgba(0,0,0,0.3); }
-            50% { box-shadow: 0 0 8px rgba(80,200,120,0.4), 0 0 16px rgba(80,200,120,0.15), inset 0 1px 2px rgba(255,255,255,0.3), 0 1px 3px rgba(0,0,0,0.3); }
-        }
-        .jade-label {
-            font-family: 'Cinzel', serif;
-            font-size: 0.5rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            color: var(--mahogany-mid);
-            text-shadow: 0 1px 0 rgba(255,255,255,0.1);
-        }
-        .jade-time {
-            font-size: 0.55rem;
-            color: rgba(255,255,255,0.2);
-            font-style: italic;
+            background-color: var(--green);
+            box-shadow: 0 0 5px var(--green);
         }
 
-        /* === PARCHMENT CENTER === */
-        .parchment-sheet {
-            margin: 1.25rem;
-            padding: 2.5rem 2rem;
-            /* Deckle-edge ivory parchment */
-            background:
-                linear-gradient(to bottom, var(--cream), var(--ivory), var(--parchment));
-            border-radius: 0.3rem;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            /* Deckle edge simulation */
-            box-shadow:
-                0 0 0 1px var(--parchment-dark),
-                2px 2px 0 0 var(--ivory),
-                -1px 2px 0 0 var(--parchment),
-                0 3px 10px rgba(0,0,0,0.15);
-        }
-        .headline {
-            font-family: 'Cinzel Decorative', serif;
-            font-weight: 900;
-            font-size: clamp(1.4rem, 3.5vw, 2.2rem);
-            line-height: 1.25;
-            letter-spacing: 0.06em;
-            margin-bottom: 1rem;
-            /* Prussian blue + gold leaf dual tone */
-            background: linear-gradient(180deg, var(--prussian) 0%, var(--prussian-light) 45%, var(--gold-leaf) 50%, var(--gold-burnished) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .status-time {
+            font-size: 0.8rem;
+            color: rgba(0, 0, 0, 0.7);
         }
 
-        /* Filigree dividers */
-        .filigree {
+        /* Main Content area */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex: 1;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            margin: 0.75rem 0;
-            color: var(--parchment-dark);
-        }
-        .filigree-line {
-            height: 1px;
-            width: 4rem;
-            background: linear-gradient(90deg, transparent, var(--brass), transparent);
-        }
-        .filigree-diamond {
-            font-size: 0.5rem;
-            color: var(--brass);
+            flex-direction: column;
+            gap: 2rem;
+            width: 100%;
         }
 
-        .tagline {
-            font-family: 'Pinyon Script', cursive;
-            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-            color: var(--ink-soft);
-            line-height: 1.5;
-            max-width: 30rem;
+        /* Hero Panel */
+        .hero-panel {
+            background-color: var(--cream);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-title {
+            color: var(--gold-dark);
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .hero-desc {
+            font-size: 1.25rem;
+            max-width: 800px;
             margin: 0 auto;
+            line-height: 1.5;
         }
 
-        /* === MODULES GRID === */
-        .modules-grid {
+        /* Action Cards Grid */
+        .cards-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 1.25rem;
-            margin: 0 1.25rem 1.25rem;
-            position: relative;
-            z-index: 2;
-        }
-        @media (min-width: 768px) {
-            .modules-grid { grid-template-columns: 5fr 7fr; }
+            gap: 2rem;
         }
 
-        /* Brass-framed module */
-        .module {
-            border-radius: 0.35rem;
+        @media (min-width: 900px) {
+            .cards-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        /* Card Style */
+        .card {
+            background-color: var(--cream);
+            border: 2px solid var(--gold);
+            border-radius: 8px;
             overflow: hidden;
-            /* Ornate brass frame */
-            border: 2px solid var(--brass);
-            box-shadow:
-                0 0 0 1px var(--brass-shadow),
-                inset 0 0 0 1px rgba(255,255,255,0.03),
-                0 3px 12px rgba(0,0,0,0.25);
-            background: var(--cream);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
         }
-        .mod-header {
-            padding: 0.6rem 0.9rem;
-            background:
-                repeating-linear-gradient(90deg, transparent, rgba(255,255,255,0.02) 1px, transparent 1.5px, transparent 3px),
-                linear-gradient(180deg, var(--brass-light), var(--brass), var(--brass-dark));
-            border-bottom: 1px solid var(--brass-shadow);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
-            display: flex; align-items: center; justify-content: space-between;
+
+        .card-header {
+            background-color: var(--cream);
+            border-bottom: 2px solid var(--gold);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .mod-header h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--mahogany-mid);
-            text-shadow: 0 1px 0 rgba(255,255,255,0.1);
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--gold-dark);
         }
-        .mod-body {
-            padding: 1.1rem;
-            background: linear-gradient(to bottom, var(--cream), var(--ivory));
-        }
-        .mod-info {
-            font-size: 0.65rem;
-            color: var(--mahogany-mid);
-            opacity: 0.5;
+
+        .card-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Dropzone */
         .dropzone {
-            border: 1.5px dashed var(--parchment-dark);
-            border-radius: 0.4rem;
-            padding: 2rem 1.2rem;
+            border: 2px dashed var(--gold);
+            padding: 3rem 2rem;
             text-align: center;
             cursor: pointer;
-            transition: all 0.25s;
-            background: rgba(255,255,255,0.4);
-            box-shadow: inset 0 2px 6px rgba(0,0,0,0.04);
+            background-color: rgba(212, 175, 55, 0.05);
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            margin-bottom: 1.5rem;
         }
+
         .dropzone:hover, .dropzone.drag-active {
-            border-color: var(--saddle);
-            background: rgba(139,69,19,0.03);
+            background-color: rgba(212, 175, 55, 0.15);
         }
-        /* Embossed leather icon */
+
         .dz-icon {
-            width: 3.2rem; height: 3.2rem;
-            margin: 0 auto 0.75rem;
-            border-radius: 0.5rem;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem;
-            background: linear-gradient(135deg, var(--saddle-light), var(--saddle));
-            color: var(--ivory);
-            border: 1px solid rgba(0,0,0,0.15);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.15);
-            transition: transform 0.2s;
+            font-size: 3rem;
+            color: var(--gold-dark);
+            margin-bottom: 1rem;
         }
-        .dropzone:hover .dz-icon { transform: scale(1.05); }
-        .dz-title { font-family: 'Cormorant Garamond', serif; font-size: 0.92rem; font-weight: 600; color: var(--ink); }
-        .dz-sub { font-family: 'Cormorant Garamond', serif; font-size: 0.82rem; font-style: italic; color: var(--ink-soft); margin-top: 0.2rem; }
+
+        .dz-text {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dz-sub {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
 
         /* Preview */
-        .preview-wrap { margin-top: 0.75rem; position: relative; }
-        .preview-img-wrap { border-radius: 0.3rem; overflow: hidden; border: 1px solid var(--parchment-dark); background: var(--parchment); }
-        .preview-img { width: 100%; height: 12rem; object-fit: contain; display: block; }
-        .preview-close {
-            position: absolute; top: 0.4rem; right: 0.4rem;
-            width: 1.5rem; height: 1.5rem; border-radius: 50%;
-            border: 1px solid var(--parchment-dark); background: var(--cream);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.55rem; color: var(--ink-soft); cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .preview-close:hover { color: #8b2020; border-color: #8b2020; }
-
-        .analyze-btn {
-            width: 100%; margin-top: 0.6rem;
-            padding: 0.65rem; border: none; border-radius: 0.3rem;
-            font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 700;
-            letter-spacing: 0.08em; text-transform: uppercase;
-            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
-            background: linear-gradient(180deg, var(--brass-light), var(--brass), var(--brass-dark));
-            color: var(--mahogany-mid);
-            border: 1px solid var(--brass-shadow);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.12);
-            transition: all 0.2s;
-        }
-        .analyze-btn:hover { box-shadow: 0 3px 10px rgba(184,150,46,0.25); }
-        .analyze-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-        /* === SAMPLES — Library catalog === */
-        .catalog-strip {
-            margin: 0 1.25rem 1.25rem;
+        .preview-wrap {
             position: relative;
-            z-index: 2;
+            margin-bottom: 1.5rem;
         }
-        .catalog-header {
-            background:
-                linear-gradient(180deg, var(--leather-light), var(--leather));
-            padding: 0.5rem 1rem;
-            border-radius: 0.3rem 0.3rem 0 0;
-            border: 1px solid var(--leather-stitch);
-            border-bottom: none;
-            display: flex; align-items: center; gap: 0.5rem;
+
+        .preview-img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border: 1px solid var(--gold);
+            border-radius: 4px;
         }
-        .catalog-header h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 0.6rem; font-weight: 700;
-            letter-spacing: 0.1em; text-transform: uppercase;
-            color: var(--brass-light);
+
+        .btn {
+            background-color: var(--gold);
+            color: var(--text-dark);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+            transition: background-color 0.2s;
         }
-        .catalog-body {
+
+        .btn:hover { background-color: var(--gold-light); }
+        .btn:disabled { background-color: #cccccc; cursor: not-allowed; color: #666; border: 1px solid #999; }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--gold);
+            margin-bottom: 1rem;
+        }
+        .btn-outline:hover { background-color: rgba(212, 175, 55, 0.1); }
+
+        /* Samples */
+        .samples-title {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--gold);
+            padding-bottom: 0.5rem;
+        }
+
+        .samples-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 0;
-            border: 1px solid var(--leather-stitch);
-            border-radius: 0 0 0.3rem 0.3rem;
-            overflow: hidden;
-            background: var(--leather);
+            gap: 1rem;
         }
-        .catalog-card {
-            padding: 0.35rem;
-            background: var(--leather);
-            border-right: 1px solid var(--leather-stitch);
+
+        .sample-item {
             cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-        }
-        .catalog-card:last-child { border-right: none; }
-        .catalog-card:hover { background: var(--leather-light); }
-        /* Brass pull frame */
-        .pull-frame {
-            border: 1.5px solid var(--brass-dark);
-            border-radius: 0.2rem;
+            border: 1px solid var(--gold);
+            border-radius: 4px;
             overflow: hidden;
-            box-shadow: inset 0 0 0 0.5px rgba(255,255,255,0.05);
+            transition: transform 0.2s;
         }
-        .pull-frame img { width: 100%; height: 4rem; object-fit: cover; display: block; opacity: 0.8; transition: opacity 0.2s; }
-        .catalog-card:hover .pull-frame img { opacity: 1; }
-        .pull-label {
-            margin-top: 0.25rem;
-            font-family: 'Cinzel', serif;
-            font-size: 0.5rem; font-weight: 600;
-            letter-spacing: 0.05em;
-            color: var(--brass-light);
+
+        .sample-item:hover { transform: scale(1.05); }
+        .sample-img { width: 100%; height: 80px; object-fit: cover; display: block; }
+        .sample-label { font-size: 0.8rem; text-align: center; padding: 0.25rem; background: var(--cream); border-top: 1px solid var(--gold); }
+
+        /* Results Area */
+        .results-state {
             text-align: center;
-            display: flex; align-items: center; justify-content: center; gap: 0.25rem;
-        }
-        .pull-tag { font-family: 'Inter', sans-serif; font-size: 0.4rem; font-weight: 700; padding: 0.05rem 0.2rem; border-radius: 0.1rem; color: #fff; }
-        .pull-tag.pos { background: rgba(139,32,32,0.8); }
-        .pull-tag.neg { background: rgba(45,100,80,0.8); }
-
-        /* === RESULTS — Sapphire aperture === */
-        .sapphire-pane {
-            background:
-                radial-gradient(ellipse at center, #0c1a2e 0%, #080e1a 100%);
-            color: var(--ivory);
+            padding: 3rem 1rem;
+            color: var(--text-muted);
             flex: 1;
-            display: flex; flex-direction: column;
-            min-height: 28rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .results-empty, .results-loading {
-            flex: 1; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            text-align: center; padding: 3rem 1rem;
-        }
-        .empty-icon {
-            width: 3.5rem; height: 3.5rem; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 0.75rem; font-size: 1.2rem;
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.04);
-            color: rgba(255,255,255,0.1);
-        }
-        .empty-title { font-family: 'Cinzel', serif; font-size: 0.95rem; color: rgba(255,255,255,0.3); margin-bottom: 0.25rem; }
-        .empty-desc { font-size: 0.82rem; color: rgba(255,255,255,0.15); max-width: 14rem; line-height: 1.5; }
-
-        .loading-spinner { position: relative; width: 2.5rem; height: 2.5rem; margin-bottom: 0.75rem; }
-        .loading-spinner::before, .loading-spinner::after { content:''; position:absolute; inset:0; border-radius:50%; border:2px solid transparent; }
-        .loading-spinner::before { border-top-color: var(--brass-light); animation: spin 1.2s linear infinite; }
-        .loading-spinner::after { inset:4px; border-bottom-color: var(--jade); animation: spin 1.8s linear infinite reverse; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .load-bar { width: 7rem; height: 2px; background: rgba(255,255,255,0.04); border-radius: 2px; overflow: hidden; margin-top: 0.6rem; }
-        .load-bar-inner { height:100%; width:100%; background: linear-gradient(90deg, var(--brass), var(--jade)); border-radius:2px; animation: loadSlide 2s ease-in-out infinite; }
-        @keyframes loadSlide { 0%{transform:translateX(-100%)} 50%{transform:translateX(0)} 100%{transform:translateX(100%)} }
-
-        .error-box { margin:1rem; padding:0.7rem; border-radius:0.25rem; background:rgba(139,32,32,0.1); border:1px solid rgba(139,32,32,0.2); display:flex; align-items:flex-start; gap:0.4rem; }
-        .error-box i { color:var(--brass-light); margin-top:0.1rem; font-size:0.8rem; }
-        .err-title { font-family:'Cinzel',serif; font-size:0.75rem; color:var(--brass-light); }
-        .err-text { font-size:0.75rem; color:rgba(255,255,255,0.3); margin-top:0.1rem; }
-
-        /* Result badge */
-        .result-badge { margin:1rem; padding:1rem; border-radius:0.3rem; animation:fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
-        .result-badge.tumor { background:linear-gradient(135deg,rgba(139,32,32,0.12),rgba(139,32,32,0.04)); border:1px solid rgba(139,32,32,0.2); }
-        .result-badge.healthy { background:linear-gradient(135deg,rgba(45,100,80,0.12),rgba(45,100,80,0.04)); border:1px solid rgba(45,100,80,0.15); }
-
-        .r-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem; }
-        .r-label { font-family:'Cinzel',serif; font-size:0.5rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.1rem; }
-        .r-class { font-family:'Cinzel Decorative',serif; font-size:1.3rem; font-weight:700; }
-        .r-icon { width:2.2rem; height:2.2rem; border-radius:0.4rem; display:flex; align-items:center; justify-content:center; font-size:1rem; }
-
-        .conf-row { display:flex; justify-content:space-between; font-size:0.68rem; margin-bottom:0.2rem; }
-        .conf-val { font-weight:700; font-family:'Inter',monospace; font-size:0.72rem; }
-        .conf-track { width:100%; height:3px; border-radius:2px; background:rgba(255,255,255,0.05); overflow:hidden; }
-        .conf-fill { height:100%; border-radius:2px; transition:width 0.8s cubic-bezier(0.4,0,0.2,1); }
-        .r-meta { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.5rem; font-size:0.68rem; color:rgba(255,255,255,0.3); }
-
-        .hm-section { margin:0 1rem 1rem; padding:0.9rem; background:rgba(255,255,255,0.02); border-radius:0.3rem; border:1px solid rgba(255,255,255,0.03); }
-        .hm-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem; }
-        .hm-title { font-family:'Cinzel',serif; font-size:0.7rem; font-weight:600; color:rgba(255,255,255,0.5); display:flex; align-items:center; gap:0.3rem; }
-        .hm-tags { display:flex; gap:0.2rem; }
-        .hm-tag { font-family:'Inter',sans-serif; font-size:0.45rem; font-weight:600; padding:0.1rem 0.3rem; border-radius:0.12rem; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.05); color:rgba(255,255,255,0.25); }
-        .hm-img-wrap { border-radius:0.25rem; overflow:hidden; border:1px solid rgba(255,255,255,0.04); background:#040810; }
-        .hm-img { width:100%; display:block; min-height:9rem; }
-        .hm-legend { display:flex; align-items:center; justify-content:space-between; margin-top:0.5rem; font-size:0.55rem; color:rgba(255,255,255,0.2); }
-        .legend-bar { display:flex; height:3px; border-radius:2px; overflow:hidden; width:6rem; }
-        .legend-bar div { flex:1; }
-
-        .verified { margin:0 1rem 1rem; padding:0.6rem 0.8rem; border-radius:0.25rem; background:rgba(45,100,80,0.06); border:1px solid rgba(45,100,80,0.1); display:flex; align-items:center; gap:0.4rem; }
-        .verified i { color:var(--jade); font-size:0.75rem; }
-        .verified p { font-size:0.68rem; color:rgba(255,255,255,0.25); }
-        .verified strong { color:rgba(255,255,255,0.45); }
-
-        /* How it works */
-        .how { padding:1rem 1.1rem; background:linear-gradient(var(--cream),var(--ivory)); }
-        .how-title { font-family:'Cinzel',serif; font-size:0.55rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:0.6rem; }
-        .how-step { display:flex; align-items:flex-start; gap:0.5rem; margin-bottom:0.4rem; }
-        .how-num { width:1.2rem; height:1.2rem; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Cinzel',serif; font-size:0.55rem; font-weight:700; flex-shrink:0; border:1px solid; margin-top:0.1rem; }
-        .how-t { font-size:0.82rem; font-weight:600; color:var(--ink); }
-        .how-s { font-size:0.75rem; color:var(--ink-soft); font-style:italic; }
-
-        .footer {
-            margin: 1.25rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--leather-stitch);
-            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem;
-            font-size: 0.65rem; color: rgba(255,255,255,0.12);
-            position: relative; z-index: 2;
-        }
-        .footer a { color: rgba(255,255,255,0.18); text-decoration: none; }
-        .footer a:hover { color: var(--brass-light); }
+        .results-state i { font-size: 3rem; color: var(--gold); margin-bottom: 1rem; }
+        .results-state h3 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-dark); }
+        .results-state p { font-size: 1.1rem; }
 
         .hidden { display: none !important; }
+
+        .result-data {
+            border: 1px solid var(--gold);
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--gold);
+            padding-bottom: 1rem;
+        }
+
+        .result-class { font-size: 1.8rem; font-weight: bold; }
+        .tumor-text { color: var(--red); }
+        .healthy-text { color: var(--green); }
+
+        .result-details p { font-size: 1.1rem; margin-bottom: 0.5rem; }
+
+        .heatmap-container { margin-bottom: 1.5rem; }
+        .heatmap-title { font-weight: bold; font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid var(--gold); padding-bottom: 0.5rem; }
+        .heatmap-img { width: 100%; border: 1px solid var(--gold); border-radius: 4px; }
+
+        .disclaimer {
+            font-style: italic;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            padding: 1rem;
+            border-left: 4px solid var(--gold);
+            background-color: rgba(212, 175, 55, 0.05);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--gold);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Error */
+        .error-msg {
+            color: var(--red);
+            border: 1px solid var(--red);
+            padding: 1rem;
+            border-radius: 4px;
+            background-color: rgba(231, 76, 60, 0.1);
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
-<div class="page">
-<div class="folio">
 
-    <!-- Brass Plate -->
-    <div class="brass-plate">
-        <div class="plate-left">
-            <div class="brain-seal"><i class="fa-solid fa-brain"></i></div>
-            <div class="plate-text">
-                <div class="plate-brand">NEUROVISIONAI</div>
-                <div class="plate-sub">Powered by Deep Learning &amp; Grad-CAM</div>
+    <!-- Header -->
+    <header class="header">
+        <div class="brand-container">
+            <i class="fa-solid fa-brain brand-logo"></i>
+            <div class="brand-text-container">
+                <span class="brand-title">NEUROVISIONAI</span>
+                <span class="brand-subtitle">Powered by Deep Learning & Grad-CAM</span>
             </div>
         </div>
-        <div class="jade-mount">
-            <div style="text-align:right;">
-                <div class="jade-label" id="gaugeText">MODEL ONLINE</div>
-                <div class="jade-time" id="statusTime">Checked just now</div>
+        <div class="status-container">
+            <div class="status-indicator">
+                <span class="status-light" id="statusLight"></span>
+                <span id="statusText">MODEL ONLINE</span>
             </div>
-            <div class="jade-stone" id="jadeStone"></div>
+            <span class="status-time" id="statusTime">Last checked: Just now</span>
         </div>
-    </div>
+    </header>
 
-    <!-- Parchment Sheet -->
-    <div class="parchment-sheet">
-        <h1 class="headline">Brain Tumor<br>Detection System</h1>
-        <div class="filigree">
-            <div class="filigree-line"></div>
-            <span class="filigree-diamond">◆</span>
-            <div class="filigree-line"></div>
+    <div class="container">
+        <!-- Hero Panel -->
+        <div class="hero-panel">
+            <h1 class="hero-title">BRAIN TUMOR DETECTION SYSTEM</h1>
+            <p class="hero-desc">A tool built to partner with you, providing swift, explainable insights for patient-centered care.</p>
         </div>
-        <p class="tagline">A tool built to partner with you, providing swift, explainable insights for patient-centered care.</p>
-        <div class="filigree" style="margin-top:0.75rem;">
-            <div class="filigree-line"></div>
-            <span class="filigree-diamond">◆</span>
-            <div class="filigree-line"></div>
-        </div>
-    </div>
 
-    <!-- Modules -->
-    <div class="modules-grid">
-        <!-- Upload -->
-        <div style="display:flex;flex-direction:column;gap:1rem;">
-            <div class="module">
-                <div class="mod-header">
-                    <h2>✦ Upload Scan ✦</h2>
-                    <span class="mod-info hidden" id="fileInfo"></span>
+        <!-- Cards Area -->
+        <div class="cards-grid">
+            
+            <!-- Upload Card -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">UPLOAD SCAN</span>
+                    <span id="fileInfo" class="hidden"></span>
                 </div>
-                <div class="mod-body">
+                <div class="card-body">
                     <div class="dropzone" id="dropzone">
                         <input type="file" id="fileInput" class="hidden" accept=".jpg,.jpeg,.png">
-                        <div class="dz-icon"><i class="fa-solid fa-file-medical"></i></div>
-                        <p class="dz-title">Start by selecting your MRI file here</p>
-                        <p class="dz-sub">or drag &amp; drop &middot; JPG, PNG accepted</p>
+                        <i class="fa-solid fa-folder-open dz-icon"></i>
+                        <p class="dz-text">Start by selecting your MRI file here</p>
+                        <p class="dz-sub">or drag & drop (JPG, PNG)</p>
                     </div>
+
                     <div class="preview-wrap hidden" id="previewContainer">
-                        <div class="preview-img-wrap"><img id="imagePreview" class="preview-img" src="" alt="MRI"></div>
-                        <button class="preview-close" id="clearBtn"><i class="fa-solid fa-xmark"></i></button>
-                        <button class="analyze-btn" id="analyzeBtn"><i class="fa-solid fa-wand-magic-sparkles"></i> Run Analysis</button>
+                        <img id="imagePreview" class="preview-img" src="" alt="Selected MRI">
+                        <button class="btn btn-outline" id="clearBtn" style="margin-top: 1rem;">Clear Image</button>
                     </div>
-                </div>
-            </div>
-            <div class="module">
-                <div class="how">
-                    <p class="how-title">How It Works</p>
-                    <div class="how-step"><div class="how-num" style="background:rgba(184,150,46,0.08);border-color:var(--brass);color:var(--brass);">1</div><div><p class="how-t">Upload</p><p class="how-s">Select a brain MRI scan</p></div></div>
-                    <div class="how-step"><div class="how-num" style="background:rgba(0,49,83,0.08);border-color:var(--prussian);color:var(--prussian);">2</div><div><p class="how-t">Analyze</p><p class="how-s">CNN classifies the scan</p></div></div>
-                    <div class="how-step"><div class="how-num" style="background:rgba(80,200,120,0.08);border-color:var(--jade-dark);color:var(--jade-dark);">3</div><div><p class="how-t">Explain</p><p class="how-s">Grad-CAM reveals attention regions</p></div></div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Results -->
-        <div class="module" style="display:flex;flex-direction:column;">
-            <div class="mod-header">
-                <h2>✦ Analysis Results ✦</h2>
-                <span class="mod-info hidden" id="analysisTime"></span>
-            </div>
-            <div class="sapphire-pane">
-                <div class="results-empty" id="resultsEmpty">
-                    <div class="empty-icon"><i class="fa-solid fa-microscope"></i></div>
-                    <p class="empty-title">Awaiting Your Scan</p>
-                    <p class="empty-desc">Upload an MRI or select a sample below to begin analysis.</p>
-                </div>
-                <div class="results-loading hidden" id="loading">
-                    <div class="loading-spinner"></div>
-                    <p class="empty-title">Processing Scan</p>
-                    <p class="empty-desc">Running inference &amp; computing Grad-CAM...</p>
-                    <div class="load-bar"><div class="load-bar-inner"></div></div>
-                </div>
-                <div class="hidden" id="errorMsg"><div class="error-box"><i class="fa-solid fa-triangle-exclamation"></i><div><p class="err-title">Analysis Failed</p><p class="err-text" id="errorText"></p></div></div></div>
-                <div class="hidden" id="resultsContainer" style="flex:1;display:flex;flex-direction:column;">
-                    <div class="result-badge" id="resultBadge">
-                        <div class="r-top"><div><p class="r-label" id="resultLabelText">Observation</p><h3 class="r-class" id="resultClass"></h3></div><div class="r-icon" id="resultIcon"></div></div>
-                        <div class="conf-row"><span style="opacity:0.4;font-size:0.62rem;">Confidence</span><span class="conf-val" id="resultConfidence"></span></div>
-                        <div class="conf-track"><div class="conf-fill" id="confidenceBar" style="width:0%"></div></div>
-                        <div class="r-meta"><span><i class="fa-solid fa-chart-simple"></i> Probability: <strong id="resultProb" style="font-family:monospace;"></strong></span><span><i class="fa-solid fa-file-image"></i> <span id="resultFilename"></span></span></div>
+                    <button class="btn" id="analyzeBtn">RUN ANALYSIS</button>
+
+                    <div style="margin-top: 2rem;">
+                        <h4 class="samples-title">QUICK TEST SAMPLES</h4>
+                        <div class="samples-grid">
+                            <div class="sample-item" onclick="loadSample('/static/samples/yes/sample1.jpg','tumor_1.jpg')">
+                                <img src="/static/samples/yes/sample1.jpg" class="sample-img" alt="Tumor">
+                                <div class="sample-label">Tumor 1</div>
+                            </div>
+                            <div class="sample-item" onclick="loadSample('/static/samples/yes/sample2.jpg','tumor_2.jpg')">
+                                <img src="/static/samples/yes/sample2.jpg" class="sample-img" alt="Tumor">
+                                <div class="sample-label">Tumor 2</div>
+                            </div>
+                            <div class="sample-item" onclick="loadSample('/static/samples/no/sample1.jpg','normal_1.jpg')">
+                                <img src="/static/samples/no/sample1.jpg" class="sample-img" alt="Normal">
+                                <div class="sample-label">Normal 1</div>
+                            </div>
+                            <div class="sample-item" onclick="loadSample('/static/samples/no/sample2.jpg','normal_2.jpg')">
+                                <img src="/static/samples/no/sample2.jpg" class="sample-img" alt="Normal">
+                                <div class="sample-label">Normal 2</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="hm-section">
-                        <div class="hm-header"><p class="hm-title"><i class="fa-solid fa-layer-group" style="color:var(--brass-light);"></i> Grad-CAM Explainability</p><div class="hm-tags"><span class="hm-tag">Original</span><span class="hm-tag">Heatmap</span><span class="hm-tag">Overlay</span></div></div>
-                        <div class="hm-img-wrap"><img id="heatmapImage" class="hm-img" src="" alt="Grad-CAM"></div>
-                        <div class="hm-legend"><div style="display:flex;align-items:center;gap:0.3rem;"><div class="legend-bar"><div style="background:#1a3a6a;"></div><div style="background:#27ae60;"></div><div style="background:#e67e22;"></div><div style="background:#9b1b30;"></div></div><span>Low → High</span></div><span style="font-style:italic;">Amber &amp; ruby = key regions</span></div>
-                    </div>
-                    <div class="verified"><i class="fa-solid fa-shield-check"></i><p><strong>AI-Assisted Analysis</strong> — Should be reviewed by a qualified radiologist before clinical use.</p></div>
                 </div>
             </div>
+
+            <!-- Results Card -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">ANALYSIS RESULTS</span>
+                    <span id="analysisTime" class="hidden"></span>
+                </div>
+                <div class="card-body">
+                    
+                    <div id="errorMsg" class="error-msg hidden"></div>
+
+                    <!-- Empty State -->
+                    <div class="results-state" id="resultsEmpty">
+                        <i class="fa-solid fa-file-waveform"></i>
+                        <h3>Awaiting Scan</h3>
+                        <p>Upload an image to see the analysis here.</p>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div class="results-state hidden" id="loadingState">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        <h3>Processing</h3>
+                        <p>Generating insights and Grad-CAM...</p>
+                    </div>
+
+                    <!-- Results Display -->
+                    <div class="hidden" id="resultsContainer">
+                        
+                        <div class="result-data">
+                            <div class="result-header">
+                                <span>Observation Result</span>
+                                <i class="fa-solid fa-clipboard-check fa-2x" style="color: var(--gold);"></i>
+                            </div>
+                            <div class="result-class" id="resultClass"></div>
+                            
+                            <div class="result-details" style="margin-top: 1rem;">
+                                <p><strong>Confidence:</strong> <span id="resultConfidence"></span>%</p>
+                                <p><strong>Raw Probability:</strong> <span id="resultProb"></span></p>
+                                <p><strong>File:</strong> <span id="resultFilename"></span></p>
+                            </div>
+                        </div>
+
+                        <div class="heatmap-container">
+                            <h4 class="heatmap-title">Explainability Map (Grad-CAM)</h4>
+                            <img id="heatmapImage" class="heatmap-img" src="" alt="Heatmap">
+                        </div>
+
+                        <div class="disclaimer">
+                            <strong>Note:</strong> This analysis is AI-assisted and provided by a convolutional neural network. It must be reviewed by a qualified radiologist prior to clinical use.
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <!-- Library Catalog Samples -->
-    <div class="catalog-strip">
-        <div class="catalog-header"><h3>✦ Quick Test Samples ✦</h3></div>
-        <div class="catalog-body">
-            <div class="catalog-card" onclick="loadSample('/static/samples/yes/sample1.jpg','tumor_1.jpg')">
-                <div class="pull-frame"><img src="/static/samples/yes/sample1.jpg" alt="T1"></div>
-                <div class="pull-label">Tumor <span class="pull-tag pos">+</span></div>
-            </div>
-            <div class="catalog-card" onclick="loadSample('/static/samples/yes/sample2.jpg','tumor_2.jpg')">
-                <div class="pull-frame"><img src="/static/samples/yes/sample2.jpg" alt="T2"></div>
-                <div class="pull-label">Tumor <span class="pull-tag pos">+</span></div>
-            </div>
-            <div class="catalog-card" onclick="loadSample('/static/samples/no/sample1.jpg','normal_1.jpg')">
-                <div class="pull-frame"><img src="/static/samples/no/sample1.jpg" alt="N1"></div>
-                <div class="pull-label">Normal <span class="pull-tag neg">−</span></div>
-            </div>
-            <div class="catalog-card" onclick="loadSample('/static/samples/no/sample2.jpg','normal_2.jpg')">
-                <div class="pull-frame"><img src="/static/samples/no/sample2.jpg" alt="N2"></div>
-                <div class="pull-label">Normal <span class="pull-tag neg">−</span></div>
-            </div>
-        </div>
-    </div>
-
+    <!-- Footer -->
     <footer class="footer">
-        <span>&copy; 2026 NeuroVision AI</span>
-        <div style="display:flex;align-items:center;gap:0.6rem;">
-            <a href="/docs">API Docs</a><a href="/redoc">ReDoc</a>
-            <span style="opacity:0.3;">&middot;</span><span>TensorFlow · FastAPI · Grad-CAM</span>
-        </div>
+        &copy; 2026 NeuroVision AI | 
+        <a href="/docs">API Documentation</a> | 
+        <a href="/redoc">ReDoc</a>
     </footer>
 
-</div>
-</div>
+    <script>
+    (() => {
+        const $ = id => document.getElementById(id);
+        const el = {
+            dropzone: $('dropzone'), fileInput: $('fileInput'),
+            previewContainer: $('previewContainer'), imagePreview: $('imagePreview'),
+            clearBtn: $('clearBtn'), analyzeBtn: $('analyzeBtn'),
+            fileInfo: $('fileInfo'), loadingState: $('loadingState'),
+            errorMsg: $('errorMsg'), resultsEmpty: $('resultsEmpty'),
+            resultsContainer: $('resultsContainer'), resultClass: $('resultClass'),
+            resultConfidence: $('resultConfidence'), resultProb: $('resultProb'),
+            resultFilename: $('resultFilename'), heatmapImage: $('heatmapImage'),
+            analysisTime: $('analysisTime'), statusText: $('statusText'),
+            statusLight: $('statusLight'), statusTime: $('statusTime')
+        };
+        let currentFile = null;
 
-<script>
-(() => {
-    const $=id=>document.getElementById(id);
-    const el={dropzone:$('dropzone'),fileInput:$('fileInput'),previewContainer:$('previewContainer'),imagePreview:$('imagePreview'),clearBtn:$('clearBtn'),analyzeBtn:$('analyzeBtn'),fileInfo:$('fileInfo'),loading:$('loading'),errorMsg:$('errorMsg'),errorText:$('errorText'),resultsEmpty:$('resultsEmpty'),resultsContainer:$('resultsContainer'),resultBadge:$('resultBadge'),resultClass:$('resultClass'),resultConfidence:$('resultConfidence'),resultLabelText:$('resultLabelText'),resultIcon:$('resultIcon'),resultProb:$('resultProb'),resultFilename:$('resultFilename'),confidenceBar:$('confidenceBar'),heatmapImage:$('heatmapImage'),analysisTime:$('analysisTime'),gaugeText:$('gaugeText'),statusTime:$('statusTime'),jadeStone:$('jadeStone')};
-    let currentFile=null;
+        el.dropzone.addEventListener('click', () => el.fileInput.click());
+        el.fileInput.addEventListener('change', e => { if (e.target.files.length) handleFile(e.target.files[0]); });
+        el.clearBtn.addEventListener('click', clearFile);
+        el.analyzeBtn.addEventListener('click', runAnalysis);
+        document.addEventListener('keydown', e => { if (e.key === 'Enter' && currentFile && !el.analyzeBtn.disabled) runAnalysis(); });
 
-    el.dropzone.addEventListener('click',()=>el.fileInput.click());
-    el.fileInput.addEventListener('change',e=>{if(e.target.files.length)handleFile(e.target.files[0]);});
-    el.clearBtn.addEventListener('click',clearFile);
-    el.analyzeBtn.addEventListener('click',runAnalysis);
-    document.addEventListener('keydown',e=>{if(e.key==='Enter'&&currentFile&&!el.analyzeBtn.disabled)runAnalysis();});
-    ['dragover','dragenter'].forEach(ev=>el.dropzone.addEventListener(ev,e=>{e.preventDefault();el.dropzone.classList.add('drag-active');}));
-    ['dragleave','drop'].forEach(ev=>el.dropzone.addEventListener(ev,e=>{e.preventDefault();el.dropzone.classList.remove('drag-active');}));
-    el.dropzone.addEventListener('drop',e=>{if(e.dataTransfer.files.length)handleFile(e.dataTransfer.files[0]);});
+        ['dragover', 'dragenter'].forEach(ev => el.dropzone.addEventListener(ev, e => { e.preventDefault(); el.dropzone.classList.add('drag-active'); }));
+        ['dragleave', 'drop'].forEach(ev => el.dropzone.addEventListener(ev, e => { e.preventDefault(); el.dropzone.classList.remove('drag-active'); }));
+        el.dropzone.addEventListener('drop', e => { if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]); });
 
-    function handleFile(f){
-        if(!['image/jpeg','image/jpg','image/png'].includes(f.type)){showError('Invalid file. Please upload JPG or PNG.');return;}
-        currentFile=f;hideError();
-        el.fileInfo.textContent=`${f.name} (${(f.size/1024).toFixed(0)} KB)`;el.fileInfo.classList.remove('hidden');
-        const r=new FileReader();r.onload=e=>{el.imagePreview.src=e.target.result;el.dropzone.classList.add('hidden');el.previewContainer.classList.remove('hidden');setState('empty');};
-        r.readAsDataURL(f);
-    }
-    function clearFile(){currentFile=null;el.fileInput.value='';el.previewContainer.classList.add('hidden');el.dropzone.classList.remove('hidden');el.fileInfo.classList.add('hidden');setState('empty');hideError();}
-    function setState(s){el.resultsEmpty.classList.toggle('hidden',s!=='empty');el.loading.classList.toggle('hidden',s!=='loading');el.resultsContainer.classList.toggle('hidden',s!=='results');}
-    function showError(m){el.errorText.textContent=m;el.errorMsg.classList.remove('hidden');setState('empty');}
-    function hideError(){el.errorMsg.classList.add('hidden');}
-
-    window.loadSample=async function(url,fn){
-        try{const r=await fetch(url);const b=await r.blob();handleFile(new File([b],fn,{type:b.type}));setTimeout(runAnalysis,200);}
-        catch{showError('Failed to load sample.');}
-    };
-
-    async function runAnalysis(){
-        if(!currentFile)return;hideError();setState('loading');el.analyzeBtn.disabled=true;
-        const t0=performance.now(),fd=new FormData();fd.append('file',currentFile);
-        try{
-            const res=await fetch('/predict/explain',{method:'POST',body:fd});const data=await res.json();
-            if(!res.ok)throw new Error(data.detail||`Error (${res.status})`);
-            el.analysisTime.textContent=`${((performance.now()-t0)/1000).toFixed(1)}s`;el.analysisTime.classList.remove('hidden');
-            renderResults(data);
-        }catch(err){showError(err.message||'Analysis failed.');}
-        finally{el.analyzeBtn.disabled=false;}
-    }
-
-    function renderResults(d){
-        setState('results');const isTumor=d.prediction==='Tumor',pct=(d.confidence*100).toFixed(1);
-        el.resultClass.textContent=isTumor?'Potential Tumor Detected':'No Tumor Detected';
-        el.resultConfidence.textContent=pct+'%';el.resultProb.textContent=d.probability.toFixed(4);el.resultFilename.textContent=d.filename;
-        el.confidenceBar.style.width='0%';requestAnimationFrame(()=>{el.confidenceBar.style.width=pct+'%';});
-        if(isTumor){
-            el.resultBadge.className='result-badge tumor';el.resultLabelText.style.color='#c05050';el.resultClass.style.color='#d06060';
-            el.resultIcon.style.background='rgba(139,32,32,0.15)';el.resultIcon.style.color='#c05050';
-            el.resultIcon.innerHTML='<i class="fa-solid fa-circle-exclamation"></i>';
-            el.confidenceBar.style.background='linear-gradient(90deg,#9b1b30,#d4956b)';
-        }else{
-            el.resultBadge.className='result-badge healthy';el.resultLabelText.style.color='var(--jade)';el.resultClass.style.color='var(--jade)';
-            el.resultIcon.style.background='rgba(45,100,80,0.15)';el.resultIcon.style.color='var(--jade)';
-            el.resultIcon.innerHTML='<i class="fa-solid fa-circle-check"></i>';
-            el.confidenceBar.style.background='linear-gradient(90deg,#2d6450,#50c878)';
+        function handleFile(f) {
+            if (!['image/jpeg', 'image/jpg', 'image/png'].includes(f.type)) { showError('Invalid file type.'); return; }
+            currentFile = f; hideError();
+            el.fileInfo.textContent = f.name; el.fileInfo.classList.remove('hidden');
+            const r = new FileReader();
+            r.onload = e => { el.imagePreview.src = e.target.result; el.dropzone.classList.add('hidden'); el.previewContainer.classList.remove('hidden'); setState('empty'); };
+            r.readAsDataURL(f);
         }
-        el.heatmapImage.src=d.heatmap_path+'?t='+Date.now();
-        if(window.innerWidth<768)el.resultsContainer.scrollIntoView({behavior:'smooth',block:'start'});
-    }
 
-    function checkHealth(){
-        fetch('/health').then(r=>r.json()).then(d=>{
-            const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-            el.statusTime.textContent='Checked '+t;
-            if(!d.model_loaded){el.gaugeText.textContent='LOADING';el.jadeStone.style.background='radial-gradient(circle at 35% 30%,#ffe070,#f0a030,#c08020)';el.jadeStone.style.boxShadow='0 0 6px rgba(240,160,48,0.4),0 1px 3px rgba(0,0,0,0.3)';}
-        }).catch(()=>{
-            el.gaugeText.textContent='OFFLINE';el.jadeStone.style.background='radial-gradient(circle at 35% 30%,#e06060,#a03030,#702020)';
-            el.jadeStone.style.boxShadow='0 0 6px rgba(160,48,48,0.4),0 1px 3px rgba(0,0,0,0.3)';el.jadeStone.style.animation='none';
-            el.statusTime.textContent='Unreachable';
-        });
-    }
-    checkHealth();setInterval(checkHealth,120000);
-})();
-</script>
+        function clearFile() {
+            currentFile = null; el.fileInput.value = '';
+            el.previewContainer.classList.add('hidden'); el.dropzone.classList.remove('hidden');
+            el.fileInfo.classList.add('hidden'); setState('empty'); hideError();
+        }
+
+        function setState(s) {
+            el.resultsEmpty.classList.toggle('hidden', s !== 'empty');
+            el.loadingState.classList.toggle('hidden', s !== 'loading');
+            el.resultsContainer.classList.toggle('hidden', s !== 'results');
+        }
+
+        function showError(m) { el.errorMsg.textContent = m; el.errorMsg.classList.remove('hidden'); setState('empty'); }
+        function hideError() { el.errorMsg.classList.add('hidden'); }
+
+        window.loadSample = async function(url, fn) {
+            try { const r = await fetch(url); const b = await r.blob(); handleFile(new File([b], fn, { type: b.type })); setTimeout(runAnalysis, 100); }
+            catch { showError('Failed to load sample image.'); }
+        };
+
+        async function runAnalysis() {
+            if (!currentFile) return; hideError(); setState('loading'); el.analyzeBtn.disabled = true;
+            const t0 = performance.now(); const fd = new FormData(); fd.append('file', currentFile);
+            try {
+                const res = await fetch('/predict/explain', { method: 'POST', body: fd });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || 'Server error');
+                el.analysisTime.textContent = `Completed in ${((performance.now() - t0) / 1000).toFixed(1)}s`;
+                el.analysisTime.classList.remove('hidden');
+                renderResults(data);
+            } catch (err) { showError(err.message || 'Analysis failed.'); }
+            finally { el.analyzeBtn.disabled = false; }
+        }
+
+        function renderResults(d) {
+            setState('results');
+            const isTumor = d.prediction === 'Tumor';
+            el.resultClass.textContent = isTumor ? 'Potential Tumor Detected' : 'No Tumor Detected';
+            el.resultClass.className = 'result-class ' + (isTumor ? 'tumor-text' : 'healthy-text');
+            el.resultConfidence.textContent = (d.confidence * 100).toFixed(1);
+            el.resultProb.textContent = d.probability.toFixed(4);
+            el.resultFilename.textContent = d.filename;
+            el.heatmapImage.src = d.heatmap_path + '?t=' + Date.now();
+        }
+
+        function checkHealth() {
+            fetch('/health').then(r => r.json()).then(d => {
+                const t = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                el.statusTime.textContent = 'Last checked: ' + t;
+                if (!d.model_loaded) {
+                    el.statusText.textContent = 'MODEL LOADING';
+                    el.statusLight.style.backgroundColor = 'orange';
+                    el.statusLight.style.boxShadow = '0 0 5px orange';
+                } else {
+                    el.statusText.textContent = 'MODEL ONLINE';
+                    el.statusLight.style.backgroundColor = 'var(--green)';
+                    el.statusLight.style.boxShadow = '0 0 5px var(--green)';
+                }
+            }).catch(() => {
+                el.statusText.textContent = 'SYSTEM OFFLINE';
+                el.statusLight.style.backgroundColor = 'var(--red)';
+                el.statusLight.style.boxShadow = '0 0 5px var(--red)';
+                el.statusTime.textContent = 'Unreachable';
+            });
+        }
+        checkHealth(); setInterval(checkHealth, 120000);
+    })();
+    </script>
 </body>
 </html>
